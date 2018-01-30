@@ -2,6 +2,7 @@
 #include "pulse_train.h"
 #include "range_resolution.h"
 #include "doppler_frequency.h"
+#include "radar_range_equation.h"
 
 int main(void)
 {
@@ -12,6 +13,8 @@ int main(void)
 	float delta_R;
 	// for doppler_frequency()
 	float df, td;
+	// for radar_range_equation()
+	float snr;
 
 	// test for airborne pulsed radar(peak power 10 KW)
 	pulse_train(0.000015, 0.0001, 10000, &dt, &prf, &pav, &ep, &ru);
@@ -40,6 +43,14 @@ int main(void)
 
 	printf("df = %f\n", df);
 	printf("td = %f\n", td);
+
+	// radar range equation test
+	// Peak Power = 1.5 MW, Operating Frequency = 5.6 GHz, Antenna Gain = 45 dB,
+	// Effective Temperature = 290 K, Pulse Width = 0.2 us.
+	// We can detect snr = 20 with max range 60.78 km.
+	radar_range_equation(1500000, 5600000000, 45, 0.1, 290, 5000000, 3, 6, 60.78, &snr);
+
+	printf("snr = %f\n", snr);
 
 	return 0;
 }

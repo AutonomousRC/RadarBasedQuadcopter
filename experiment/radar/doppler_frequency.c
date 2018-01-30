@@ -1,14 +1,5 @@
 #include "radar_basic.h"
-
-float angle2radian(float ang)
-{
-	return ang * M_PI / 180.0;
-}
-
-float get_wavelength(float freq)
-{
-	return LIGHT_SPEED / freq;
-}
+#include "math_tech.h"
 
 int doppler_frequency(float freq, float ang, float radar_vel, float tar_vel,
 			float *doppler_freq, float *time_dil)
