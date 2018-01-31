@@ -3,6 +3,7 @@
 #include "range_resolution.h"
 #include "doppler_frequency.h"
 #include "radar_range_equation.h"
+#include "power_aperture.h"
 
 int main(void)
 {
@@ -15,6 +16,8 @@ int main(void)
 	float df, td;
 	// for radar_range_equation()
 	float snr;
+	// for power_aperture()
+	float pap;
 
 	// test for airborne pulsed radar(peak power 10 KW)
 	pulse_train(0.000015, 0.0001, 10000, &dt, &prf, &pav, &ep, &ru);
@@ -50,7 +53,15 @@ int main(void)
 	// We can detect snr = 20 with max range 60.78 km.
 	radar_range_equation(1500000, 5600000000, 45, 0.1, 290, 5000000, 3, 6, 60.78, &snr);
 
-	printf("snr = %f\n", snr);
+	printf("snr = %f dB\n", snr);
+
+	// Scan Time = 2 s, Noise Figure = 8 dB, Losses = 6 dB, Search Volume = 7.4 Steradians
+	// Range of Interest = 75 km, Required SNR = 20 dB, Target Cross Section = 3.162 m^2
+	// Effective Temperature = 290 K, Search Volume Azimuth = 180 degree,
+	// Search Volume Elevation = 135 degree.
+	power_aperture(20, 2, 3.162, 75000, 8, 290, 6, 180, 135, &pap);
+
+	printf("pap = %f dB\n", pap);
 
 	return 0;
 }
