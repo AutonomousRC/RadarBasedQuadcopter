@@ -2,8 +2,8 @@ TARGET = radar_basic
 
 all: $(TARGET)
 
-radar_basic:		main.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o math_tech.o
-	$(CC) -o radar_basic main.o math_tech.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o -lm
+radar_basic:		main.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o self_screening_jammer.o math_tech.o
+	$(CC) -o radar_basic main.o math_tech.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o self_screening_jammer.o -lm
 
 pulse_train:		pulse_train.o
 	$(CC) -c pulse_train.c
@@ -19,6 +19,9 @@ radar_range_equation:	radar_range_equation.o
 
 power_aperture:		power_aperture.o
 	$(CC) -c power_aperture.c
+
+self_screening_jammer:	self_screening_jammer.o
+	$(CC) -c self_screening_jammer.c
 
 math_tech:		math_tech.o
 	$(CC) -c math_tech.c

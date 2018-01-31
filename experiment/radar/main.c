@@ -4,6 +4,7 @@
 #include "doppler_frequency.h"
 #include "radar_range_equation.h"
 #include "power_aperture.h"
+#include "self_screening_jammer.h"
 
 int main(void)
 {
@@ -18,6 +19,8 @@ int main(void)
 	float snr;
 	// for power_aperture()
 	float pap;
+	// for self_screening_jammer()
+	float br_range;
 
 	// test for airborne pulsed radar(peak power 10 KW)
 	pulse_train(0.000015, 0.0001, 10000, &dt, &prf, &pav, &ep, &ru);
@@ -62,6 +65,15 @@ int main(void)
 	power_aperture(20, 2, 3.162, 75000, 8, 290, 6, 180, 135, &pap);
 
 	printf("pap = %f dB\n", pap);
+
+	// Radar Peak Power = 50 KW, Jammer Peak Power = 200 W,
+	// Radar Operating Bandwidth = 667 KHz, Jammer Bandwidth = 50 MHz,
+	// Radar & Jammer Losses = 0.1 dB, Target Cross Section = 10 m^2,
+	// Radar Antenna Gain = 35 dB, Jammer Antenna Gain = 10 dB,
+	// Radar Operating Frequency = 5.6 GHz
+	self_screening_jammer(50000, 35, 5600000000, 10, 667000, 0.1, 200, 50000000, 10, 0.1, &br_range);
+
+	printf("br_range(cross-over range) = %f km\n", br_range);
 
 	return 0;
 }
