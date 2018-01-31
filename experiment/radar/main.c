@@ -5,6 +5,7 @@
 #include "radar_range_equation.h"
 #include "power_aperture.h"
 #include "self_screening_jammer.h"
+#include "sdjpn.h"
 
 int main(void)
 {
@@ -21,6 +22,8 @@ int main(void)
 	float pap;
 	// for self_screening_jammer()
 	float br_range;
+	// for sdjpn()
+	float sjn;
 
 	// test for airborne pulsed radar(peak power 10 KW)
 	pulse_train(0.000015, 0.0001, 10000, &dt, &prf, &pav, &ep, &ru);
@@ -74,6 +77,15 @@ int main(void)
 	self_screening_jammer(50000, 35, 5600000000, 10, 667000, 0.1, 200, 50000000, 10, 0.1, &br_range);
 
 	printf("br_range(cross-over range) = %f km\n", br_range);
+
+	// Radar Peak Power = 50 KW, Radar Antenna Gain = 35 dB,
+	// Target Cross Section = 10 m^2, Operating Frequency = 5.6 GHz,
+	// Radar Pulse Width = 50 ms, Radar Losses = 5 dB,
+	// Range = 400 km, Jammer Peak Power = 200 W, Jammer Bandwidth = 50 MHz,
+	// Jammer Antenna Gain = 10 dB, Jammer Losses = 0.3 dB
+	sdjpn(50000, 35, 10, 5600000000, 0.05, 5, 400000, 200, 50000000, 10, 0.3, &sjn);
+
+	printf("S / (J + N) = %f dB\n", sjn);
 
 	return 0;
 }
