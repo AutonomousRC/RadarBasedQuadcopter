@@ -6,6 +6,7 @@
 #include "power_aperture.h"
 #include "self_screening_jammer.h"
 #include "sdjpn.h"
+#include "burn_through_range.h"
 
 int main(void)
 {
@@ -24,6 +25,8 @@ int main(void)
 	float br_range;
 	// for sdjpn()
 	float sjn;
+	// for burn_through_range()
+	float btr;
 
 	// test for airborne pulsed radar(peak power 10 KW)
 	pulse_train(0.000015, 0.0001, 10000, &dt, &prf, &pav, &ep, &ru);
@@ -80,12 +83,25 @@ int main(void)
 
 	// Radar Peak Power = 50 KW, Radar Antenna Gain = 35 dB,
 	// Target Cross Section = 10 m^2, Operating Frequency = 5.6 GHz,
-	// Radar Pulse Width = 50 ms, Radar Losses = 5 dB,
+	// Radar Pulse Width = 50 us, Radar Losses = 5 dB,
 	// Range = 400 km, Jammer Peak Power = 200 W, Jammer Bandwidth = 50 MHz,
 	// Jammer Antenna Gain = 10 dB, Jammer Losses = 0.3 dB
 	sdjpn(50000, 35, 10, 5600000000, 0.00005, 5, 400, 200, 50000000, 10, 0.3, &sjn);
 
 	printf("S / (J + N) = %f dB\n", sjn);
+
+	// Radar Peak Power = 50 KW, Radar Antenna Gain = 35 dB,
+	// Target Cross Section = 10 m^2, Operating Frequency = 5.6 GHz,
+	// Radar Pulse Width = 0.5 ms, Radar Losses = 5 dB,
+	// Jammer Peak Power = 200 W, Jammer Bandwidth = 50 MHz, Jammer Antenna Gain = 10 dB,
+	// Jammer Losses = 0.3 dB, S / (J + N) = 15 dB, ERP = 1 ~ 1000 W
+	burn_through_range(50000, 35, 10, 5600000000, 0.0005, 5, 200, 500000000, 10, 0.3, 15, 1, &btr);
+
+	printf("Burn-Through Range = %f km\n", btr);
+
+	burn_through_range(50000, 35, 10, 5600000000, 0.0005, 5, 200, 500000000, 10, 0.3, 15, 1000, &btr);
+
+	printf("Burn-Through Range = %f km\n", btr);
 
 	return 0;
 }
