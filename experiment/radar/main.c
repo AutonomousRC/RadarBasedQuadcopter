@@ -83,7 +83,7 @@ int main(void)
 	// Radar Pulse Width = 50 ms, Radar Losses = 5 dB,
 	// Range = 400 km, Jammer Peak Power = 200 W, Jammer Bandwidth = 50 MHz,
 	// Jammer Antenna Gain = 10 dB, Jammer Losses = 0.3 dB
-	sdjpn(50000, 35, 10, 5600000000, 0.05, 5, 400000, 200, 50000000, 10, 0.3, &sjn);
+	sdjpn(50000, 35, 10, 5600000000, 0.00005, 5, 400, 200, 50000000, 10, 0.3, &sjn);
 
 	printf("S / (J + N) = %f dB\n", sjn);
 
