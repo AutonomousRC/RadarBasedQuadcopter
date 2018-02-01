@@ -7,6 +7,7 @@
 #include "self_screening_jammer.h"
 #include "sdjpn.h"
 #include "burn_through_range.h"
+#include "stand_off_jammer.h"
 
 int main(void)
 {
@@ -27,6 +28,8 @@ int main(void)
 	float sjn;
 	// for burn_through_range()
 	float btr;
+	// for stand_off_jammer()
+	float soj_btr;
 
 	// test for airborne pulsed radar(peak power 10 KW)
 	pulse_train(0.000015, 0.0001, 10000, &dt, &prf, &pav, &ep, &ru);
@@ -102,6 +105,15 @@ int main(void)
 	burn_through_range(50000, 35, 10, 5600000000, 0.0005, 5, 200, 500000000, 10, 0.3, 15, 1000, &btr);
 
 	printf("Burn-Through Range = %f km\n", btr);
+
+	// Radar Peak Power = 50 KW, Antenna Gain = 35 dB, Target Cross Section = 10 m^2,
+	// Radar Bandwidth = 667 KHz, Operating Frequency = 5.6 GHz, Radar Losses = 0.01 dB,
+	// Range to Target = 1000 km, Jammer Power = 5000 W, Jammer Bandwidth = 50 MHz,
+	// Jammer Antenna Gain = 30 dB, Jammer Losses = 0.3 dB, Jammer Antenna Gain = 10,
+	// Range to Jammer = 600 km
+	stand_off_jammer(50000, 35, 10, 667000, 5600000000, 0.01, 1000, 5000, 50000000, 30, 0.3, 10, 600, &soj_btr);
+
+	printf("Stand-Off Jammer Burn-Through Range = %f km\n", soj_btr);
 
 	return 0;
 }
