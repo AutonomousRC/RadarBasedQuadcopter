@@ -2,6 +2,11 @@
 #include "radar_range_equation.h"
 #include "ogl_helper.h"
 
+// for radar_range_equation()
+extern double snr[3][1000];
+extern double rcs[4];
+extern double range[1001];
+
 void slice(double start, double end, int num, double *arr)
 {
 	int i;
@@ -33,18 +38,18 @@ void print_darr(double (*arr)[1000])
 int main(int argc, char **argv)
 {
 	int i;
-	// for radar_range_equation()
-	double snr[3][1000] = {0};
-	double rcs[3] = {0.1, 1, 0.01};
-	double range[1001] = {0};
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE);
 	glutInitWindowSize(1200, 800);
-	glutInitWindowPosition(100, 100);
+	//glutInitWindowPosition(0, 0);
 	glutCreateWindow("SNR vs Detection Range");
 
-	slice(25, 165, 1000, range);
+	slice(20, 180, 1000, range);
+
+	rcs[0] = 0.1;
+	rcs[1] = 1.0;
+	rcs[2] = 0.01;
 
 	// print_arr(range);
 
@@ -52,7 +57,7 @@ int main(int argc, char **argv)
 	for(i = 0; i < 3; i++)
 		rre_vec(1500000, 5600000000, 45, rcs[i], 290, 5000000, 3, 6, range, snr[i]);
 
-	// print_darr(snr);
+	//print_darr(snr);
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);

@@ -51,7 +51,8 @@ void radar_range_equation(float pt, float freq, float g, float sigma, float to,
 void rre_vec(double pt, double freq, double g, double sigma, double to,
 	double b, double nf, double loss, double *range, double *snr)
 {
-	int i, tmp;
+	int i;
+	double tmp;
 	double lambda, p_peak, lambda_sqdb, sigmadb, four_pi_cub;
 	double k_db, to_db, b_db, num, den;
 	double range_pwr4_db[1000] = {0};
