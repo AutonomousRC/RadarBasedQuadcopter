@@ -50,10 +50,15 @@ void draw_rcs_dr_curve(void)
 {
 	int i, j;
 
-	glColor3f(1, 0, 0);
-
 	for(i = 0; i < 3; i++)
 	{
+		if(i == 0)
+			glColor3f(89.0/255.0, 116.0/255.0, 238.0/255.0);
+		else if(i == 1)
+			glColor3f(135.0/255.0, 117.0/255.0, 204.0/255.0);
+		else if(i == 2)
+			glColor3f(240.0/255.0, 90.0/255.0, 53.0/255.0);
+
 		glBegin(GL_LINES);
 
 		for(j = 0; j < 1000; j++)
@@ -86,7 +91,7 @@ void convert_orig2graph(void)
 	double tmp_r[1001] = {0};
 	double tmp_snr[3][1000] = {0};
 
-	// range: 20 ~ 180 km
+	// range: 20 ~ 170 km
 	// snr: -8.x ~ 29.x dB
 	// graph x: -130 ~ 130
 	// graph y: -80 ~ 80
@@ -95,9 +100,9 @@ void convert_orig2graph(void)
 
 	   1. Make sure zero criteria.
 	      0 ~ 260:    0 - a, 260 - b
-	      0 ~ 160 km: 0 - c, 160 - d
+	      0 ~ 150 km: 0 - c, 150 - d
 
-	   2. ratio = b / d = 260 / 160
+	   2. ratio = b / d = 260 / 150
 
 	   3. interval = (d - c) / 999
 
@@ -154,6 +159,7 @@ void display(void)
 	float vert[16] = {0};
 	float hori[7] = {0};
 	int start_val = 20;
+	int hori_val = -10;
 	int i;
 
 	glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -176,7 +182,7 @@ void display(void)
 	slc(-130, 130, 15, vert);
 	slc(-80, 80, 6, hori);
 
-	v_ratio = get_ratio(-130, 130, 20, 180);
+	v_ratio = get_ratio(-130, 130, 20, 170);
 	h_ratio = get_ratio(-80, 80, -10, 50);
 
 	//printf("v_ratio = %f, h_ratio = %f\n", v_ratio, h_ratio);
@@ -223,20 +229,50 @@ void display(void)
 	glRasterPos2f(-15.0, -95);
 	drawStringBig(label);
 
+	glColor3f(0.0, 1.0, 1.0);
+
 	for(i = 0; i < 16; i++)
 	{
 		sprintf(label, "%d", start_val);
 
+		start_val += 10;
+
 		if(i)
-		{
-			start_val += 10;
-			glRasterPos2f(vert[i], -85);
-		}
+			glRasterPos2f(vert[i - 1] - 3, -88);
 		else
-			glRasterPos2f(-130, -85);
+			glRasterPos2f(-133, -88);
 
 		drawStringBig(label);
 	}
+
+	for(i = 0; i < 7; i++)
+	{
+		sprintf(label, "%d", hori_val);
+
+		hori_val += 10;
+
+		if(i)
+			glRasterPos2f(-129.0, hori[i - 1] + 1);
+		else
+			glRasterPos2f(-129.0, -79.0);
+
+		drawStringBig(label);
+	}
+
+	glColor3f(135.0/255.0, 117.0/255.0, 204.0/255.0);
+	sprintf(label, "RCS = 1.0");
+	glRasterPos2f(-127.2, 40);
+	drawStringBig(label);
+
+	glColor3f(89.0/255.0, 116.0/255.0, 238.0/255.0);
+	sprintf(label, "RCS = 0.1");
+	glRasterPos2f(-127.2, 15.5);
+	drawStringBig(label);
+
+	glColor3f(240.0/255.0, 90.0/255.0, 53.0/255.0);
+	sprintf(label, "RCS = 0.01");
+	glRasterPos2f(-127.2, -5.0);
+	drawStringBig(label);
 
 	draw_rcs_dr_curve();
 
@@ -261,8 +297,4 @@ void reshape(int w, int h)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-}
-
-void draw_function(void)
-{
 }
