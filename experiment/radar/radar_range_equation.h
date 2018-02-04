@@ -4,4 +4,7 @@
 void radar_range_equation(float, float, float, float, float,
 			float, float, float, float, float *);
 
+void rre_vec(double, double, double, double, double,
+	double, double, double, double *, double *);
+
 #endif

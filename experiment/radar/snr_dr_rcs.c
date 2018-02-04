@@ -2,10 +2,10 @@
 #include "radar_range_equation.h"
 #include "ogl_helper.h"
 
-void slice(float start, float end, int num, float *arr)
+void slice(double start, double end, int num, double *arr)
 {
 	int i;
-	float interval = (end - start) / (num - 1);
+	double interval = (end - start) / (num - 1);
 
 	arr[0] = start;
 
@@ -13,30 +13,50 @@ void slice(float start, float end, int num, float *arr)
 		arr[i] = start + interval * i;
 }
 
-void print_arr(float *arr)
+void print_arr(double *arr)
 {
 	int i;
 
 	for(i = 0; arr[i] != 0; i++)
-		printf("arr[%d] = %f\n", i, arr[i]);
+		printf("arr[%d] = %lf\n", i, arr[i]);
 }
 
-int main(void)
+void print_darr(double (*arr)[1000])
+{
+	int i, j;
+
+	for(i = 0; i < 3; i++)
+		for(j = 0; j < 1000; j++)
+			printf("arr[%d][%d] = %.24lf\n", i, j, arr[i][j]);
+}
+
+int main(int argc, char **argv)
 {
 	int i;
 	// for radar_range_equation()
-	float snr[3][1000] = {0};
-	float rcs[3] = {0.1, 1, 0.01};
-	float range[1001] = {0};
+	double snr[3][1000] = {0};
+	double rcs[3] = {0.1, 1, 0.01};
+	double range[1001] = {0};
+
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE);
+	glutInitWindowSize(1200, 800);
+	glutInitWindowPosition(100, 100);
+	glutCreateWindow("SNR vs Detection Range");
 
 	slice(25, 165, 1000, range);
 
-	print_arr(range);
+	// print_arr(range);
 
-#if 0
+	// radar range equation
 	for(i = 0; i < 3; i++)
-		radar_range_equation(1500000, 5600000000, 45, rcs[i], 290, 5000000, 3, 6, 60.78, &snr);
-#endif
+		rre_vec(1500000, 5600000000, 45, rcs[i], 290, 5000000, 3, 6, range, snr[i]);
+
+	// print_darr(snr);
+
+	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
+	glutMainLoop();
 
 	return 0;
 }

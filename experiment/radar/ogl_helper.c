@@ -1,5 +1,6 @@
 #include "radar_basic.h"
 #include "ogl_helper.h"
+#include <string.h>
 
 void drawString(char *s)
 {
@@ -31,6 +32,8 @@ void display(void)
 	glVertex3f(100.0, 0.0, 0.0);
 	glVertex3f(-100.0, 0.0, 0.0);
 	glEnd();
+
+	glutSwapBuffers();
 }
 
 void reshape(int w, int h)
