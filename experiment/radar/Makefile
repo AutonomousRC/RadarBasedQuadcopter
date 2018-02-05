@@ -1,6 +1,9 @@
-TARGET = radar_basic
+TARGET = radar_basic snr_dr_rcs
 
 all: $(TARGET)
+
+snr_dr_rcs:		snr_dr_rcs.o radar_range_equation.o math_tech.o ogl_helper.o
+	$(CC) -o snr_dr_rcs snr_dr_rcs.o radar_range_equation.o math_tech.o ogl_helper.o -lm -lGL -lglut -lGLU
 
 radar_basic:		main.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o self_screening_jammer.o sdjpn.o burn_through_range.o stand_off_jammer.o math_tech.o
 	$(CC) -o radar_basic main.o math_tech.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o self_screening_jammer.o sdjpn.o burn_through_range.o stand_off_jammer.o -lm
@@ -34,6 +37,9 @@ stand_off_jammer:	stand_off_jammer.o
 
 math_tech:		math_tech.o
 	$(CC) -c math_tech.c
+
+ogl_helper:		ogl_helper.o
+	$(CC) -c ogl_helper.c
 
 clean:
 	rm -rf $(TARGET)
