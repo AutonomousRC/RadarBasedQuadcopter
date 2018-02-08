@@ -8,6 +8,8 @@
 
 void drawString(char *);
 void drawStringBig(char *);
+void slc(float, float, int, float *);
+void p_arr(double *, int);
 void display(void);
 void reshape(int w, int h);
 void draw_function(void);

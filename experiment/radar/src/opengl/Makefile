@@ -7,6 +7,7 @@ endif
 PWD = $(shell pwd)
 
 INC_DIRS = -I$(PWD)/../radar_principles
+INC_DIRS += -I$(PWD)/../math
 LIBS = -lm -lGL -lglut -lGLU
 
 #SRCS = ogl_helper.c
@@ -19,6 +20,9 @@ all:	$(OBJS)
 	@echo "========================================"
 	@echo "=========== Compiling OpenGL ==========="
 	@echo "========================================"
+	@echo " "
+	@echo "SRC = $(SRCS)"
+	@echo " "
 	$(CC) $(DBG_FLAGS) -c $< -o $@ $(INC_DIRS)
 
 clean:

@@ -20,8 +20,10 @@ MATH_TECH_DIR = $(PWD)/../math
 OGL_DIR = $(PWD)/../opengl
 RADAR_PRINCIPLES_DIR = $(PWD)/../radar_principles
 
-MATH_TECH_OBJS = $(wildcard $(MATH_TECH_DIR)/*.o)
-OGL_OBJS = $(wildcard $(OGL_DIR)/*.o)
+#MATH_TECH_OBJS = $(wildcard $(MATH_TECH_DIR)/*.o)
+MATH_TECH_OBJS = $(shell find $(MATH_TECH_DIR) -name '*.o')
+#OGL_OBJS = $(wildcard $(OGL_DIR)/*.o)
+OGL_OBJS = $(shell find $(OGL_DIR) -name '*.o')
 RADAR_PRINCIPLES_OBJS = $(shell find $(RADAR_PRINCIPLES_DIR) -name '*.o')
 
 all:	$(TARGET)

@@ -19,9 +19,9 @@ void slice_section(double s, double e, double itv, double *arr)
 
         for(i = 0; i < (int)(tmp + 2); i++)
         {
-                arr[i] = tmp * i;
+                arr[i] = itv * i;
 #if 0
-                printf("arr[%d] = %lf\n", i, arr[i]);
+                printf("arr[%d] = %.9lf\n", i, arr[i]);
 #endif
         }
 }
