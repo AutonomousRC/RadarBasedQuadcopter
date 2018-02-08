@@ -14,7 +14,7 @@ LIBS = -lm -lGL -lglut -lGLU
 
 OBJS = $(SRCS:%.c=%.o)
 
-TARGET = radar_basic snr_dr_rcs
+TARGET = radar_basic snr_dr_rcs lfm_signal
 
 MATH_TECH_DIR = $(PWD)/../math
 OGL_DIR = $(PWD)/../opengl
@@ -35,6 +35,9 @@ radar_basic:		main.o
 
 snr_dr_rcs:		snr_dr_rcs.o
 	@echo "$<" # snr_dr_rcs.o
+	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(LIBS)
+
+lfm_signal:		lfm_signal.o
 	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(LIBS)
 
 .c.o:

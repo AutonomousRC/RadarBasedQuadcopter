@@ -9,7 +9,8 @@ PWD = $(shell pwd)
 INC_DIRS = -I$(PWD)/../radar_principles
 LIBS = -lm -lGL -lglut -lGLU
 
-SRCS = ogl_helper.c
+#SRCS = ogl_helper.c
+SRCS = $(wildcard *.c)
 OBJS = $(SRCS:%.c=%.o)
 
 all:	$(OBJS)
