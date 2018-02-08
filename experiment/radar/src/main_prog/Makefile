@@ -24,7 +24,6 @@ MATH_TECH_OBJS = $(wildcard $(MATH_TECH_DIR)/*.o)
 OGL_OBJS = $(wildcard $(OGL_DIR)/*.o)
 RADAR_PRINCIPLES_OBJS = $(shell find $(RADAR_PRINCIPLES_DIR) -name '*.o')
 
-.PHONY: all clean
 all:	$(TARGET)
 
 radar_basic:		main.o

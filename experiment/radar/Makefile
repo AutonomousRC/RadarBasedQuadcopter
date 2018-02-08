@@ -9,7 +9,7 @@ RADAR_PRINCIPLES = $(SRC)/radar_principles
 RADAR_BASIC = $(MAIN)/radar_basic
 SNR_DR_RCS = $(MAIN)/snr_dr_rcs
 
-SUBDIRS = $(MATH) $(RADAR_PRINCIPLES) $(OGL) $(RADAR_PRINCIPLES)
+SUBDIRS = $(MATH) $(RADAR_PRINCIPLES) $(OGL) $(MAIN)
 
 all:
 	for dir in $(SUBDIRS); do \
