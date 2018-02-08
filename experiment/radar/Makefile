@@ -1,64 +1,26 @@
-ifeq ($(RELEASE), 1)
-CC_FLAGS = -O2
-else
-CC_FLAGS = -g -O0 -DDEBUG
-endif
+PWD = $(shell pwd)
+SRC = $(PWD)/src
 
-TARGET = radar_basic snr_dr_rcs
-SRCS = pulse_train.c range_resolution.c doppler_frequency.c radar_range_equation.c power_aperture.c self_screening_jammer.c sdjpn.c burn_through_range.c stand_off_jammer.c math_tech.c ogl_helper.c
-OBJS = $(SRCS:%.c=%.o)
-NAMES = $(SRCS:%.c=%)
+MATH = $(SRC)/math
+OGL = $(SRC)/opengl
+MAIN = $(SRC)/main_prog
+RADAR_PRINCIPLES = $(SRC)/radar_principles
 
-### Second need to make it with debug option.
+RADAR_BASIC = $(MAIN)/radar_basic
+SNR_DR_RCS = $(MAIN)/snr_dr_rcs
 
-all: $(TARGET)
+SUBDIRS = $(MATH) $(RADAR_PRINCIPLES) $(OGL) $(RADAR_PRINCIPLES)
 
-snr_dr_rcs:		snr_dr_rcs.o radar_range_equation.o math_tech.o ogl_helper.o
-	$(CC) -o snr_dr_rcs snr_dr_rcs.o radar_range_equation.o math_tech.o ogl_helper.o -lm -lGL -lglut -lGLU $(CC_FLAGS)
-
-radar_basic:		main.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o self_screening_jammer.o sdjpn.o burn_through_range.o stand_off_jammer.o math_tech.o
-	$(CC) -o radar_basic main.o math_tech.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o self_screening_jammer.o sdjpn.o burn_through_range.o stand_off_jammer.o -lm $(CC_FLAGS)
-
-.c.o:
-	@echo "Compiling Source File with FLAGS"
-	$(CC) $(CC_FLAGS) -c $< -o $@
-
-### First need to make it simple
-### Below part show one by one case.
-
-#pulse_train:		pulse_train.o
-#	$(CC) -c pulse_train.c
-#
-#range_resolution:	range_resolution.o
-#	$(CC) -c range_resolution.c
-#
-#doppler_frequency:	doppler_frequency.o
-#	$(CC) -c doppler_frequency.c
-#
-#radar_range_equation:	radar_range_equation.o
-#	$(CC) -c radar_range_equation.c
-#
-#power_aperture:		power_aperture.o
-#	$(CC) -c power_aperture.c
-#
-#self_screening_jammer:	self_screening_jammer.o
-#	$(CC) -c self_screening_jammer.c
-#
-#sdjpn:			sdjpn.o
-#	$(CC) -c sdjpn.c
-#
-#burn_through_range:	burn_through_range.o
-#	$(CC) -c burn_through_range.c
-#
-#stand_off_jammer:	stand_off_jammer.o
-#	$(CC) -c stand_off_jammer.c
-#
-#math_tech:		math_tech.o
-#	$(CC) -c math_tech.c
-#
-#ogl_helper:		ogl_helper.o
-#	$(CC) -c ogl_helper.c
+all:
+	for dir in $(SUBDIRS); do \
+		$(MAKE) -C $$dir; \
+	done
+	$(shell mkdir build)
+	$(shell cp $(RADAR_BASIC) ./build/)
+	$(shell cp $(SNR_DR_RCS) ./build/)
 
 clean:
-	rm -rf $(TARGET)
-	rm -rf *.o
+	for dir in $(SUBDIRS); do \
+		$(MAKE) -C $$dir clean; \
+	done
+	$(shell rm -rf build)
