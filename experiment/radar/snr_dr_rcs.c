@@ -51,13 +51,17 @@ int main(int argc, char **argv)
 	rcs[1] = 1.0;
 	rcs[2] = 0.01;
 
-	// print_arr(range);
+#if DEBUG
+	print_arr(range);
+#endif
 
 	// radar range equation
 	for(i = 0; i < 3; i++)
 		rre_vec(1500000, 5600000000, 45, rcs[i], 290, 5000000, 3, 6, range, snr[i]);
 
-	//print_darr(snr);
+#if DEBUG
+	print_darr(snr);
+#endif
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);

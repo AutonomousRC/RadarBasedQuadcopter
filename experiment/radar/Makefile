@@ -1,16 +1,30 @@
+ifeq ($(RELEASE), 1)
+CC_FLAGS = -O2
+else
+CC_FLAGS = -g -O0 -DDEBUG
+endif
+
 TARGET = radar_basic snr_dr_rcs
 SRCS = pulse_train.c range_resolution.c doppler_frequency.c radar_range_equation.c power_aperture.c self_screening_jammer.c sdjpn.c burn_through_range.c stand_off_jammer.c math_tech.c ogl_helper.c
 OBJS = $(SRCS:%.c=%.o)
+NAMES = $(SRCS:%.c=%)
+
+### Second need to make it with debug option.
 
 all: $(TARGET)
 
 snr_dr_rcs:		snr_dr_rcs.o radar_range_equation.o math_tech.o ogl_helper.o
-	$(CC) -o snr_dr_rcs snr_dr_rcs.o radar_range_equation.o math_tech.o ogl_helper.o -lm -lGL -lglut -lGLU
+	$(CC) -o snr_dr_rcs snr_dr_rcs.o radar_range_equation.o math_tech.o ogl_helper.o -lm -lGL -lglut -lGLU $(CC_FLAGS)
 
 radar_basic:		main.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o self_screening_jammer.o sdjpn.o burn_through_range.o stand_off_jammer.o math_tech.o
-	$(CC) -o radar_basic main.o math_tech.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o self_screening_jammer.o sdjpn.o burn_through_range.o stand_off_jammer.o -lm
+	$(CC) -o radar_basic main.o math_tech.o pulse_train.o range_resolution.o doppler_frequency.o radar_range_equation.o power_aperture.o self_screening_jammer.o sdjpn.o burn_through_range.o stand_off_jammer.o -lm $(CC_FLAGS)
 
-### First make it simple
+.c.o:
+	@echo "Compiling Source File with FLAGS"
+	$(CC) $(CC_FLAGS) -c $< -o $@
+
+### First need to make it simple
+### Below part show one by one case.
 
 #pulse_train:		pulse_train.o
 #	$(CC) -c pulse_train.c
