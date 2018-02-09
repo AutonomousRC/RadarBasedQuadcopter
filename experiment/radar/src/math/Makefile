@@ -8,7 +8,8 @@ PWD = $(shell pwd)
 
 INC_DIRS = -I$(PWD)/../radar_principles
 
-SRCS = math_tech.c
+#SRCS = math_tech.c
+SRCS = $(wildcard *.c)
 OBJS = $(SRCS:%.c=%.o)
 
 all:	$(OBJS)

@@ -35,3 +35,11 @@ void linear_slice(double start, double end, int num, double *arr)
         for(i = 0; i < num; i++)
                 arr[i] = start + interval * i;
 }
+
+void pow_vec(double *x, double *y, int data_num, double series)
+{
+	int i;
+
+	for(i = 0; i < data_num; i++)
+		y[i] = pow(x[i], series);
+}
