@@ -4,5 +4,6 @@
 float angle2radian(float);
 float get_wavelength(float);
 void slice_section(double, double, double, double *);
+void linear_slice(double, double, int, double *);
 
 #endif

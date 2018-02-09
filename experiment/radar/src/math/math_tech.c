@@ -25,3 +25,13 @@ void slice_section(double s, double e, double itv, double *arr)
 #endif
         }
 }
+
+void linear_slice(double start, double end, int num, double *arr)
+{
+        int i;
+        double interval = (end - start) / (num - 1);
+	//double interval = (end - start) / num;
+
+        for(i = 0; i < num; i++)
+                arr[i] = start + interval * i;
+}

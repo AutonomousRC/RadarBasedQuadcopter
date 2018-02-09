@@ -8,4 +8,10 @@
 
 void lfm_fft(void);
 
+typedef struct complex
+{
+        double re;
+        double im;
+} c;
+
 #endif

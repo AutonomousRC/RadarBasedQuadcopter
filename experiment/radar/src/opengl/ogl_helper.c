@@ -75,7 +75,7 @@ void p_arr(double *arr, int num)
 	int i;
 
 	for(i = 0; i < num; i++)
-		printf("arr[%d] = %lf\n", i, arr[i]);
+		printf("arr[%d] = %.12lf\n", i, arr[i]);
 }
 
 void draw_rcs_dr_curve(void)
