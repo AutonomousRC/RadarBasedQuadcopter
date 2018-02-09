@@ -9,6 +9,8 @@
 void drawString(char *);
 void drawStringBig(char *);
 void slc(float, float, int, float *);
+void init_screen(void);
+void rect_screen(void);
 void p_arr(double *, int);
 void display(void);
 void reshape(int w, int h);

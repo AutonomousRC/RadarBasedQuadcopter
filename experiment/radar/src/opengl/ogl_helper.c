@@ -38,6 +38,38 @@ void slc(float start, float end, int num, float *arr)
 		arr[i] = start + interval * (i + 1);
 }
 
+void init_screen(void)
+{
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+}
+
+void rect_screen(void)
+{
+	glColor3f(0, 1, 0);
+
+	glBegin(GL_LINE_LOOP);
+	glVertex3f(130.0, -80.0, 0.0);
+	glVertex3f(-130.0, -80.0, 0.0);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glVertex3f(130.0, 80.0, 0.0);
+	glVertex3f(-130.0, 80.0, 0.0);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glVertex3f(-130.0, 80.0, 0.0);
+	glVertex3f(-130.0, -80.0, 0.0);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	glVertex3f(130.0, 80.0, 0.0);
+	glVertex3f(130.0, -80.0, 0.0);
+	glEnd();
+}
+
 void p_arr(double *arr, int num)
 {
 	int i;

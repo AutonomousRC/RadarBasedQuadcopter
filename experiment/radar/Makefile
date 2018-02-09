@@ -9,6 +9,7 @@ RADAR_PRINCIPLES = $(SRC)/radar_principles
 RADAR_BASIC = $(MAIN)/radar_basic
 SNR_DR_RCS = $(MAIN)/snr_dr_rcs
 LFM_SIGNAL = $(MAIN)/lfm_signal
+LFM_SPECTRUM = $(MAIN)/lfm_spectrum
 
 SUBDIRS = $(MATH) $(RADAR_PRINCIPLES) $(OGL) $(MAIN)
 
@@ -17,6 +18,7 @@ all:	_all
 	$(shell cp $(RADAR_BASIC) ./build/)
 	$(shell cp $(SNR_DR_RCS) ./build/)
 	$(shell cp $(LFM_SIGNAL) ./build/)
+	$(shell cp $(LFM_SPECTRUM) ./build/)
 
 _all:
 	for dir in $(SUBDIRS); do \

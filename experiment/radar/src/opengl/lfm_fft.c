@@ -1,10 +1,10 @@
-#include "lfm_visual.h"
+#include "lfm_fft.h"
 #include "ogl_helper.h"
 #include "math_tech.h"
-#include <stdio.h>
 #include <math.h>
 
-void calc_period(double *freq, double *period)
+#if 0
+void calc_period(float *freq, float *period)
 {
 	*period = 1 / (*freq);
 }
@@ -52,56 +52,22 @@ void draw_lfm_sin_signal(void)
 
 	glEnd();
 }
+#endif
 
-void lfm_visual(void)
+void lfm_fft(void)
 {
 	static char label[100];
 	float vert[11] = {0};
 	float hori[5] = {0};
 	int i;
 
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
+	init_screen();
+	rect_screen();
 
-	glColor3f(0, 1, 0);
+	slc(-130, 130, 8, vert);
+	slc(-80, 80, 6, hori);
 
-	glBegin(GL_LINE_LOOP);
-	glVertex3f(130.0, -80.0, 0.0);
-	glVertex3f(-130.0, -80.0, 0.0);
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	glVertex3f(130.0, 80.0, 0.0);
-	glVertex3f(-130.0, 80.0, 0.0);
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	glVertex3f(-130.0, 80.0, 0.0);
-	glVertex3f(-130.0, -80.0, 0.0);
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	glVertex3f(130.0, 80.0, 0.0);
-	glVertex3f(130.0, -80.0, 0.0);
-	glEnd();
-
-#if 0
-	glBegin(GL_LINE_LOOP);
-	glVertex3f(0.0, 80.0, 0.0);
-	glVertex3f(0.0, -80.0, 0.0);
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	glVertex3f(130.0, 0.0, 0.0);
-	glVertex3f(-130.0, 0.0, 0.0);
-	glEnd();
-#endif
-
-	slc(-130, 130, 10, vert);
-	slc(-80, 80, 4, hori);
-
-	for(i = 0; i < 10; i++)
+	for(i = 0; i < 8; i++)
 	{
 		glBegin(GL_LINE_LOOP);
 		glVertex3f(vert[i], 80.0, 0.0);
@@ -109,7 +75,7 @@ void lfm_visual(void)
 		glEnd();
 	}
 
-	for(i = 0; i < 4; i++)
+	for(i = 0; i < 6; i++)
 	{
 		glBegin(GL_LINE_LOOP);
 		glVertex3f(130.0, hori[i], 0.0);
@@ -119,7 +85,7 @@ void lfm_visual(void)
 
 	glColor3f(1, 0, 0);
 
-	draw_lfm_sin_signal();
+	//draw_lfm_fft();
 
 	glutSwapBuffers();
 }
