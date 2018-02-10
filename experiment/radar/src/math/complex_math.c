@@ -13,6 +13,20 @@ void euler_formula(double *series, complex *data, int data_num)
 	}
 }
 
+void complex_abs(complex *x, double *y, int data_num)
+{
+	int i;
+	double temp_re, temp_im;
+
+	for(i = 0; i < 800; i++)
+	{
+		temp_re = fabs(x[i].re);
+		temp_im = fabs(x[i].im);
+
+		y[i] = sqrt(pow(temp_re, 2) + pow(temp_im, 2));
+	}
+}
+
 void print_complex(complex *data, int data_num)
 {
 	int i;

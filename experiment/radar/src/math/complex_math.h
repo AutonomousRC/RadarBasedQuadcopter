@@ -8,6 +8,7 @@ typedef struct
 } complex;
 
 void euler_formula(double *, complex *, int);
+void complex_abs(complex *, double *, int);
 void print_complex(complex *, int);
 
 #endif

@@ -5,7 +5,9 @@
 
 void bluestein_first(complex *, int, double *, double *, complex *);
 void bluestein_second(complex *, double *, double *, complex *);
+void bluestein_third(complex *, double *, double *, complex *);
 void set_bluestein(complex *);
-void fft(complex *, complex *);
+void bluestein_fft(complex *, complex *);
+void fft_shift(double *);
 
 #endif

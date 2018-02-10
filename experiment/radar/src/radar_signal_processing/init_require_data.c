@@ -27,5 +27,15 @@ void init_require_data(double *sig)
 
 	//print_complex(data, 800);
 
-	fft(data, fft_res);
+	bluestein_fft(data, fft_res);
+
+	//print_complex(fft_res, 800);
+
+	complex_abs(fft_res, sig, 800);
+
+	//p_arr(sig, 800);
+
+	fft_shift(sig);
+
+	p_arr(sig, 800);
 }
