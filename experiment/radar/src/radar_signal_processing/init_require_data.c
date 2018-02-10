@@ -34,7 +34,8 @@ void init_require_data(double *sig)
 
 	bluestein_fft(data, fft_res);
 
-	print_complex(fft_res, 800);
+	/* This */
+	//print_complex(fft_res, 800);
 
 	complex_abs(fft_res, sig, 800);
 

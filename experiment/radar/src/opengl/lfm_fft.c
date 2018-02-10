@@ -8,11 +8,14 @@
 
 void draw_lfm_fft(void)
 {
-	int i;
+	int i, cache = 0;
 	double sig[800] = {0};
 	double freq[800] = {0};
+	double cx, cy;
 
 	init_require_data(sig);
+
+	//p_arr(sig, 800);
 
 #if 1
 	linear_slice(-50000000, 50000000, 800, freq);
@@ -23,7 +26,15 @@ void draw_lfm_fft(void)
 
 	for(i = 0; i < 800; i++)
 	{
-		glVertex2f(freq[i] * (130.0 / 50000000.0), sig[i] * (80.0 / 1000.0));
+		if(cache)
+		{
+			glVertex2f(freq[i] * (130.0 / 50000000.0), -80.0 + sig[i] * 3.0);
+			glVertex2f(cx * (130.0 / 50000000.0), -80.0 + cy * 3.0);
+		}
+
+		cache = 1;
+		cx = freq[i];
+		cy = sig[i];
 	}
 
 	glEnd();
