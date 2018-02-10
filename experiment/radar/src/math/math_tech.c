@@ -43,3 +43,11 @@ void pow_vec(double *x, double *y, int data_num, double series)
 	for(i = 0; i < data_num; i++)
 		y[i] = pow(x[i], series);
 }
+
+void p_arr(double *arr, int num)
+{
+        int i;
+
+        for(i = 0; i < num; i++)
+                printf("arr[%d] = %.12lf\n", i, arr[i]);
+}

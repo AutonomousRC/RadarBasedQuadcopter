@@ -70,6 +70,7 @@ void rect_screen(void)
 	glEnd();
 }
 
+#if 0
 void p_arr(double *arr, int num)
 {
 	int i;
@@ -77,6 +78,7 @@ void p_arr(double *arr, int num)
 	for(i = 0; i < num; i++)
 		printf("arr[%d] = %.12lf\n", i, arr[i]);
 }
+#endif
 
 void draw_rcs_dr_curve(void)
 {

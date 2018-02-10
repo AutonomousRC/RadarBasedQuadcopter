@@ -8,6 +8,8 @@ PWD = $(shell pwd)
 
 INC_DIRS = -I$(PWD)/../radar_principles
 INC_DIRS += -I$(PWD)/../math
+INC_DIRS += -I$(PWD)/../radar_signal_processing
+
 LIBS = -lm -lGL -lglut -lGLU
 
 #SRCS = ogl_helper.c

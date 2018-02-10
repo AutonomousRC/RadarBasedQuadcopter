@@ -36,17 +36,17 @@ radar_basic:		main.o
 	@echo "$(MATH_TECH_OBJS)"
 	@echo "$(OGL_OBJS)"
 	@echo "$(RADAR_PRINCIPLES_OBJS)"
-	$(CC) -o $@ main.o $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(LIBS)
+	$(CC) -o $@ main.o $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_SIGNAL_PROCESSING_OBJS) $(RADAR_PRINCIPLES_OBJS) $(LIBS)
 
 snr_dr_rcs:		snr_dr_rcs.o
 	@echo "$<" # snr_dr_rcs.o
-	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(LIBS)
+	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(RADAR_SIGNAL_PROCESSING_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(LIBS)
 
 lfm_signal:		lfm_signal.o
-	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(LIBS)
+	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(RADAR_SIGNAL_PROCESSING_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(LIBS)
 
 lfm_spectrum:		lfm_spectrum.o
-	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(LIBS)
+	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(RADAR_SIGNAL_PROCESSING_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(LIBS)
 
 bluestein_fft_test:	bluestein_fft_test.o
 	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(RADAR_SIGNAL_PROCESSING_OBJS) $(LIBS)

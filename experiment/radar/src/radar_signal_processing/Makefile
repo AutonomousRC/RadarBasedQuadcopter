@@ -7,6 +7,7 @@ endif
 PWD = $(shell pwd)
 
 INC_DIRS = -I$(PWD)/../math
+INC_DIRS += -I$(PWD)/../opengl
 
 #SRCS = $(patsubst %.o,%,$(wildcard *.c))
 SRCS = $(wildcard *.c)

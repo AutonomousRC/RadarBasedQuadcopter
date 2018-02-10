@@ -1,6 +1,7 @@
 #include "bluestein_fft.h"
 #include "complex_math.h"
 #include <stdbool.h>
+#include <string.h>
 #include <math.h>
 
 void bluestein_first(complex *x, int init, double *costab, double *sintab, complex *y)
