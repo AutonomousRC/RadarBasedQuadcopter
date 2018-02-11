@@ -1,17 +1,30 @@
 #include "bluestein_fft.h"
 #include "complex_math.h"
+//
+#include "init_require_data.h"
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
 
-void bluestein_first(complex *x, int init, double *costab, double *sintab, complex *y)
+void bluestein_first(complex *x, int init, double *costab, double *sintab, complex *y, int data_num)
 {
 	int i, j, ix, ju, iy, iheight, istart, ihi;
 	double temp_re, temp_im, twid_re, twid_im;
 	bool tst;
 
-	for(i = 0; i < 2048; i++)
+#if 1
+	int dn = data_num;
+	int cdn = 1 << calc_align_idx(dn);
+	int cdn2 = cdn * 2;
+	int dnm1 = dn - 1;
+	int cdn2m1 = cdn2 - 1;
+	int cdn2m3 = cdn2 - 3;
+	int cdnd2 = cdn / 2;
+#endif
+
+	//for(i = 0; i < 2048; i++)
+	for(i = 0; i < cdn2; i++)
 	{
 		y[i].re = 0.0;
 		y[i].im = 0.0;
@@ -21,10 +34,12 @@ void bluestein_first(complex *x, int init, double *costab, double *sintab, compl
 	ju = 0;
 	iy = 0;
 
-	for(i = 0; i < 799; i++)
+	//for(i = 0; i < 799; i++)
+	for(i = 0; i < dnm1; i++)
 	{
 		y[iy] = x[ix];
-		iy = 2048;
+		//iy = 2048;
+		iy = cdn2;
 		tst = true;
 		while (tst)
 		{
@@ -39,7 +54,8 @@ void bluestein_first(complex *x, int init, double *costab, double *sintab, compl
 
 	y[iy] = x[ix];
 
-	for(i = 0; i <= 2047; i += 2)
+	//for(i = 0; i <= 2047; i += 2)
+	for(i = 0; i <= cdn2m1; i += 2)
 	{
 		temp_re = y[i + 1].re;
 		temp_im = y[i + 1].im;
@@ -51,8 +67,12 @@ void bluestein_first(complex *x, int init, double *costab, double *sintab, compl
 
 	iy = 2;
 	ix = 4;
+	/*
 	ju = 512;
 	iheight = 2045;
+	*/
+	ju = cdnd2;
+	iheight = cdn2m3;
 
 	while(ju > 0)
 	{
@@ -68,7 +88,8 @@ void bluestein_first(complex *x, int init, double *costab, double *sintab, compl
 
 		istart = 1;
 
-		for(j = ju; j < 1024; j += ju)
+		//for(j = ju; j < 1024; j += ju)
+		for(j = ju; j < cdn; j += ju)
 		{
 			twid_re = costab[j];
 			twid_im = sintab[j];
@@ -96,13 +117,26 @@ void bluestein_first(complex *x, int init, double *costab, double *sintab, compl
 	}
 }
 
-void bluestein_second(complex *x, double *costab, double *sintab, complex *y)
+void bluestein_second(complex *x, double *costab, double *sintab, complex *y, int data_num)
 {
 	bool tst;
 	double temp_re, temp_im, twid_re, twid_im;
 	int i, j, ix, iy, ju, iheight, istart, ihi;
 
-	for(i = 0; i < 2048; i++)
+#if 1
+	int dn = data_num;			// first case 1599
+	int cdn = 1 << calc_align_idx(dn);	// first case 2048
+	int dnm1 = dn - 1;			// first case 1598
+	int cdnm1 = cdn - 1;			// first case 2047
+	int cdnm3 = cdn - 3;			// first case 2045
+	int cdnd2 = cdn / 2;			// first case 1024
+	int cdnd4 = cdn / 4;			// first case 512
+
+	//printf("dn = %d, cdn = %d, dnm1 = %d, cdnm1 = %d, cdnm3 = %d, cdnd2 = %d, cdnd4 = %d\n", dn, cdn, dnm1, cdnm1, cdnm3, cdnd2, cdnd4);
+#endif
+
+	//for(i = 0; i < 2048; i++)
+	for(i = 0; i < cdn; i++)
 	{
 		y[i].re = 0.0;
 		y[i].im = 0.0;
@@ -112,10 +146,12 @@ void bluestein_second(complex *x, double *costab, double *sintab, complex *y)
 	ju = 0;
 	iy = 0;
 
-	for(i = 0; i < 1598; i++)
+	//for(i = 0; i < 1598; i++)
+	for(i = 0; i < dnm1; i++)
 	{
 		y[iy] = x[ix];
-		iy = 2048;
+		//iy = 2048;
+		iy = cdn;
 		tst = true;
 
 		while (tst)
@@ -131,7 +167,8 @@ void bluestein_second(complex *x, double *costab, double *sintab, complex *y)
 
 	y[iy] = x[ix];
 
-	for (i = 0; i <= 2047; i += 2)
+	//for (i = 0; i <= 2047; i += 2)
+	for (i = 0; i <= cdnm1; i += 2)
 	{
 		temp_re = y[i + 1].re;
 		temp_im = y[i + 1].im;
@@ -143,8 +180,10 @@ void bluestein_second(complex *x, double *costab, double *sintab, complex *y)
 
 	iy = 2;
 	ix = 4;
-	ju = 512;
-	iheight = 2045;
+	//ju = 512;
+	ju = cdnd4;
+	//iheight = 2045;
+	iheight = cdnm3;
 
 	while(ju > 0)
 	{
@@ -160,7 +199,8 @@ void bluestein_second(complex *x, double *costab, double *sintab, complex *y)
 
 		istart = 1;
 
-		for(j = ju; j < 1024; j += ju)
+		//for(j = ju; j < 1024; j += ju)
+		for(j = ju; j < cdnd2; j += ju)
 		{
 			twid_re = costab[j];
 			twid_im = sintab[j];
@@ -188,20 +228,32 @@ void bluestein_second(complex *x, double *costab, double *sintab, complex *y)
 	}
 }
 
-void bluestein_third(complex *x, double *costab, double *sintab, complex *y)
+void bluestein_third(complex *x, double *costab, double *sintab, complex *y, int data_num)
 {
 	int i, ix, iy, j, ju, iheight, istart, ihi;
 	double temp_re, temp_im, twid_re, twid_im;
 	bool tst;
 
+#if 1
+	int dn = data_num;	// first case 2048
+	int dnm1 = dn - 1;	// first case 2047
+	int dnd2 = dn / 2;	// first case 1024
+	int dnd4 = dn / 4;	// first case 512
+	int dnm3 = dn - 3;	// first case 2045
+
+	//printf("dn = %d, dnm1 = %d\n", dn, dnm1);
+#endif
+
 	ix = 0;
 	ju = 0;
 	iy = 0;
 
-	for(i = 0; i < 2047; i++)
+	//for(i = 0; i < 2047; i++)
+	for(i = 0; i < dnm1; i++)
 	{
 		y[iy] = x[ix];
-		iy = 2048;
+		//iy = 2048;
+		iy = dn;
 		tst = true;
 
 		while(tst)
@@ -217,7 +269,8 @@ void bluestein_third(complex *x, double *costab, double *sintab, complex *y)
 
 	y[iy] = x[ix];
 
-	for(i = 0; i <= 2047; i += 2)
+	//for(i = 0; i <= 2047; i += 2)
+	for(i = 0; i <= dnm1; i += 2)
 	{
 		temp_re = y[i + 1].re;
 		temp_im = y[i + 1].im;
@@ -229,8 +282,10 @@ void bluestein_third(complex *x, double *costab, double *sintab, complex *y)
 
 	iy = 2;
 	ix = 4;
-	ju = 512;
-	iheight = 2045;
+	//ju = 512;
+	ju = dnd4;
+	//iheight = 2045;
+	iheight = dnm3;
 
 	while(ju > 0)
 	{
@@ -246,7 +301,8 @@ void bluestein_third(complex *x, double *costab, double *sintab, complex *y)
 
 		istart = 1;
 
-		for(j = ju; j < 1024; j += ju)
+		//for(j = ju; j < 1024; j += ju)
+		for(j = ju; j < dnd2; j += ju)
 		{
 			twid_re = costab[j];
 			twid_im = sintab[j];
@@ -273,36 +329,56 @@ void bluestein_third(complex *x, double *costab, double *sintab, complex *y)
 		iheight -= iy;
 	}
 
-	for(iy = 0; iy < 2048; iy++)
+	//for(iy = 0; iy < 2048; iy++)
+	for(iy = 0; iy < dn; iy++)
 	{
+		y[iy].re *= sin(2 * M_PI / dn) / (2 * M_PI);
+		y[iy].im *= sin(2 * M_PI / dn) / (2 * M_PI);
+	/*
 		y[iy].re *= sin(2 * M_PI / 2048) / (2 * M_PI);
 		y[iy].im *= sin(2 * M_PI / 2048) / (2 * M_PI);
+	*/
 		//y[iy].re *= 0.00048828125;
 		//y[iy].im *= 0.00048828125;
 	}
 }
 
-void set_bluestein(complex *wwc)
+void set_bluestein(complex *wwc, int data_num)
 {
 	int i, rt, idx, y;
 	double nt_im;
 
-	idx = 798;
+#if 1
+	int dn = data_num;
+	int dn2 = dn * 2;
+	int dnm1 = dn - 1;
+	int dnm2 = dn - 2;
+#endif
+
+	//idx = 798;
+	idx = dnm2;
 	rt = 0;
 
+	/*
 	wwc[799].re = 1.0;
 	wwc[799].im = 0.0;
+	*/
+	wwc[dnm1].re = 1.0;
+	wwc[dnm1].im = 0.0;
 
-	for(i = 0; i < 799; i++)
+	for(i = 0; i < dnm1; i++)
 	{
 		y = ((i + 1) << 1) - 1;
 
-		if(1600 - rt <= y)
-			rt = (y + rt) - 1600;
+		//if(1600 - rt <= y)
+		if(dn2 - rt <= y)
+			//rt = (y + rt) - 1600;
+			rt = (y + rt) - dn2;
 		else
 			rt += y;
 
-		nt_im = -M_PI * (double)rt / 800.0;
+		//nt_im = -M_PI * (double)rt / 800.0;
+		nt_im = -M_PI * (double)rt / (double)dn;
 		wwc[idx].re = cos(nt_im);
 		wwc[idx].im = -sin(nt_im);
 
@@ -318,15 +394,57 @@ void set_bluestein(complex *wwc)
 
 	idx = 0;
 
-	for(i = 798; i >= 0; i += -1)
+	//for(i = 798; i >= 0; i += -1)
+	for(i = dnm2; i >= 0; i += -1)
 	{
-		wwc[i + 800] = wwc[idx];
+		//wwc[i + 800] = wwc[idx];
+		wwc[i + dn] = wwc[idx];
 		idx++;
 	}
 }
 
-void bluestein_fft(complex *x, complex *y)
+int calc_align_idx(int num)
 {
+	int i, tmp = 0;
+
+	for(i = 1; ; i++)
+	{
+		tmp = 1 << i;
+		if(tmp > num)
+			return i;
+	}
+}
+
+void bluestein_fft(complex *x, complex *y, int y_data_num)
+{
+	/* Can't Use this method because of heap corruption problem */
+
+	/* dn2m1 = wwc = y_data_num * 2 - 1
+	   res = y_data_num
+	   cdn2 = fy = calc_align_idx(y_data_num) * 2
+	         fv = calc_align_idx(y_data_num) * 2
+	   cdn = costab = calc_align_idx(y_data_num)
+	         sintab = calc_align_idx(y_data_num)
+	         sintab_inv = calc_align_idx(y_data_num)
+	   step = 2 * M_PI / (calc_align_idx(y_data_num) * 2)
+	   tmp = step * calc_align_idx(y_data_num)
+	   dnm1 = y_data_num - 1
+	   cdnp1 = for loop = calc_align_idx(y_data_num) + 1 */
+
+#if 1
+	int dn = y_data_num;
+	int dn2m1 = dn * 2 - 1;
+	int cdn = 1 << calc_align_idx(dn);
+	int cdn2 = cdn * 2;
+	int dnm1 = dn - 1;
+	int cdnp1 = cdn + 1;
+#endif
+#if 0
+	complex *wwc = NULL;
+	complex *res = NULL;
+	complex *fy = NULL;
+	complex *fv = NULL;
+#endif
 	complex wwc[1599] = {0};
 	complex res[800] = {0};
 
@@ -341,10 +459,23 @@ void bluestein_fft(complex *x, complex *y)
 	double sintab[1025] = {0};
 	double sintab_inv[1025] = {0};
 
-	step = 2 * M_PI / 2048;
-	tmp = step * 1024;
+	/* Heap Corruption */
+#if 0
+	complex_arr_alloc(&wwc, dn2m1);
+	complex_arr_alloc(&res, dn);
+	complex_arr_alloc(&fy, cdn2);
+	complex_arr_alloc(&fv, cdn2);
+#endif
 
-	for(i = 0; i < 1025; i++)
+	//step = 2 * M_PI / 2048;
+	step = 2 * M_PI / cdn2;
+	//tmp = step * 1024;
+	tmp = step * cdn;
+
+	//printf("dn = %d, dn2m1 = %d, cdn = %d, cdn2 = %d, dnm1 = %d, cdnp1 = %d\n", dn, dn2m1, cdn, cdn2, dnm1, cdnp1);
+
+	// for(i = 0; i < 1025; i++)
+	for(i = 0; i < cdnp1; i++)
 	{
 		costab[i] = cos(t);
 		sintab[i] = -sin(t);
@@ -357,16 +488,24 @@ void bluestein_fft(complex *x, complex *y)
 #endif
 	}
 
-	set_bluestein(wwc);
+	set_bluestein(wwc, dn);
 
 	//print_complex(wwc, 1599);
 
+	/* y_data_num
+	*/
+
 	xidx = 0;
 
-	for(i = 0; i < 800; i++)
+	//for(i = 0; i < 800; i++)
+	for(i = 0; i < dn; i++)
 	{
+		/*
 		res[i].re = wwc[i + 799].re * x[xidx].re + wwc[i + 799].im * x[xidx].im;
 		res[i].im = wwc[i + 799].re * x[xidx].im - wwc[i + 799].im * x[xidx].re;
+		*/
+		res[i].re = wwc[i + dnm1].re * x[xidx].re + wwc[i + dnm1].im * x[xidx].im;
+		res[i].im = wwc[i + dnm1].re * x[xidx].im - wwc[i + dnm1].im * x[xidx].re;
 		xidx++;
 	}
 
@@ -379,15 +518,16 @@ void bluestein_fft(complex *x, complex *y)
 	printf("x[0].im = %lf\n", x[0].im);
 #endif
 
-	bluestein_first(res, 0, costab, sintab, fy);
+	bluestein_first(res, 0, costab, sintab, fy, dn);
 
 	//print_complex(fy, 2048);
 
-	bluestein_second(wwc, costab, sintab, fv);
+	bluestein_second(wwc, costab, sintab, fv, dn2m1);
 
 	//print_complex(fv, 2048);
 
-	for(xidx = 0; xidx < 2048; xidx++)
+	//for(xidx = 0; xidx < 2048; xidx++)
+	for(xidx = 0; xidx < cdn2; xidx++)
 	{
 		fy_re = fy[xidx].re; 
 		fy[xidx].re = fy[xidx].re * fv[xidx].re - fy[xidx].im * fv[xidx].im;
@@ -396,22 +536,28 @@ void bluestein_fft(complex *x, complex *y)
 
 	//print_complex(fy, 2048);
 
-	bluestein_third(fy, costab, sintab_inv, fv);
+	bluestein_third(fy, costab, sintab_inv, fv, cdn2);
 
 	//print_complex(fv, 2048);
 
 	xidx = 0;
 
-	for(i = 0; i < 800; i++)
+	//for(i = 0; i < 800; i++)
+	for(i = 0; i < dn; i++)
 	{
+		/*
 		res[xidx].re = wwc[i + 799].re * fv[i + 799].re + wwc[i + 799].im * fv[i + 799].im;
 		res[xidx].im = wwc[i + 799].re * fv[i + 799].im - wwc[i + 799].im * fv[i + 799].re;
+		*/
+		res[xidx].re = wwc[i + dnm1].re * fv[i + dnm1].re + wwc[i + dnm1].im * fv[i + dnm1].im;
+		res[xidx].im = wwc[i + dnm1].re * fv[i + dnm1].im - wwc[i + dnm1].im * fv[i + dnm1].re;
 		xidx++;
 	}
 
 	//print_complex(res, 800);
 
-	memcpy(&y[0], &res[0], 800U * sizeof(complex));
+	//memcpy(&y[0], &res[0], 800U * sizeof(complex));
+	memcpy(&y[0], &res[0], dn * sizeof(complex));
 }
 
 void fft_shift(double *x)

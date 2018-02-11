@@ -3,45 +3,72 @@
 #include "complex_math.h"
 #include "ogl_helper.h"
 #include "math_tech.h"
+#include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
-void init_require_data(double *sig)
+void arr_alloc(double **data, int num)
 {
-	int i, n = 800;
+	*data = (double *)malloc(sizeof(double) * num);
+	memset(*data, 0x0, sizeof(double) * num);
+}
+
+void complex_arr_alloc(complex **data, int num)
+{
+	*data = (complex *)malloc(sizeof(complex) * num);
+	memset(*data, 0x0, sizeof(complex) * num);
+}
+
+// first sample_num = 800
+void init_require_data(double *sig, int sample_num)
+{
+	int i, n = sample_num;
 
 	double tau = 10 * pow(10, -6);
 	double b = 40 * pow(10, 6);
 	double time_b_prod = b * tau;
-	double t[800] = {0};
-	double sq_t[800] = {0};
-	double series[800] = {0};
+	//double t[n] = {0};
+	double *t = NULL;
+	//double sq_t[n] = {0};
+	double *sq_t = NULL;
+	//double series[n] = {0};
+	double *series = NULL;
 
-	complex data[800] = {0};
-	complex fft_res[800] = {0};
-	
+	//complex data[n] = {0};
+	complex *data = NULL;
+	//complex fft_res[n] = {0};
+	complex *fft_res = NULL;
+
+	arr_alloc(&t, n);
+	arr_alloc(&sq_t, n);
+	arr_alloc(&series, n);
+
+	complex_arr_alloc(&data, n);
+	complex_arr_alloc(&fft_res, n);
+
 	linear_slice(-tau / 2.0, tau / 2.0, n, t);
-	//p_arr(t, 800);
-	pow_vec(t, sq_t, 800, 2.0);
+	//p_arr(t, n);
+	pow_vec(t, sq_t, n, 2.0);
 
-	for(i = 0; i < 800; i++)
+	for(i = 0; i < n; i++)
 		series[i] = sq_t[i] * M_PI * (b / tau);
 
-	//p_arr(series, 800);
+	//p_arr(series, n);
 
-	euler_formula(series, data, 800);
+	euler_formula(series, data, n);
 
-	//print_complex(data, 800);
+	//print_complex(data, n);
 
-	bluestein_fft(data, fft_res);
+	bluestein_fft(data, fft_res, n);
 
 	/* This */
-	//print_complex(fft_res, 800);
+	//print_complex(fft_res, n);
 
-	complex_abs(fft_res, sig, 800);
+	complex_abs(fft_res, sig, n);
 
-	//p_arr(sig, 800);
+	//p_arr(sig, n);
 
 	fft_shift(sig);
 
-	//p_arr(sig, 800);
+	p_arr(sig, n);
 }

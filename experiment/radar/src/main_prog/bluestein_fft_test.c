@@ -4,7 +4,7 @@
 int main(void)
 {
 	double signal[800] = {0};
-	init_require_data(signal);
+	init_require_data(signal, 800);
 
 	return 0;
 }

@@ -3,11 +3,12 @@
 
 #include "complex_math.h"
 
-void bluestein_first(complex *, int, double *, double *, complex *);
-void bluestein_second(complex *, double *, double *, complex *);
-void bluestein_third(complex *, double *, double *, complex *);
-void set_bluestein(complex *);
-void bluestein_fft(complex *, complex *);
+int calc_align_idx(int);
+void bluestein_first(complex *, int, double *, double *, complex *, int);
+void bluestein_second(complex *, double *, double *, complex *, int);
+void bluestein_third(complex *, double *, double *, complex *, int);
+void set_bluestein(complex *, int);
+void bluestein_fft(complex *, complex *, int);
 void fft_shift(double *);
 
 #endif

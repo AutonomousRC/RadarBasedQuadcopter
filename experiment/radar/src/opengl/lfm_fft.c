@@ -6,25 +6,28 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define	SAMPLE		800
+
+// first case of sample num = 800
 void draw_lfm_fft(void)
 {
 	int i, cache = 0;
-	double sig[800] = {0};
-	double freq[800] = {0};
+	double sig[SAMPLE] = {0};
+	double freq[SAMPLE] = {0};
 	double cx, cy;
 
-	init_require_data(sig);
+	init_require_data(sig, SAMPLE);
 
 	//p_arr(sig, 800);
 
 #if 1
-	linear_slice(-50000000, 50000000, 800, freq);
+	linear_slice(-50000000, 50000000, SAMPLE, freq);
 
 	//p_arr(freq, 800);
 
 	glBegin(GL_LINES);
 
-	for(i = 0; i < 800; i++)
+	for(i = 0; i < SAMPLE; i++)
 	{
 		if(cache)
 		{
