@@ -20,5 +20,5 @@ Radar Based Quadcopter
 2. make
 3. If wanna debug then enter below command at terminal.
 
-export CFLAGS="-g -O0 -DDEBUG"
+export CFLAGS="-g -O0 -DDEBUG"  
 make

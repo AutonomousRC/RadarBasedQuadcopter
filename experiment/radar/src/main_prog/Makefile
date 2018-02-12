@@ -15,7 +15,7 @@ LIBS = -lm -lGL -lglut -lGLU
 
 OBJS = $(SRCS:%.c=%.o)
 
-TARGET = radar_basic snr_dr_rcs lfm_signal lfm_spectrum bluestein_fft_test fft_rect_win
+TARGET = radar_basic snr_dr_rcs lfm_signal lfm_spectrum bluestein_fft_test fft_rect_win n2_fft_test
 
 MATH_TECH_DIR = $(PWD)/../math
 OGL_DIR = $(PWD)/../opengl
@@ -52,6 +52,9 @@ bluestein_fft_test:	bluestein_fft_test.o
 	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(RADAR_SIGNAL_PROCESSING_OBJS) $(LIBS)
 
 fft_rect_win:		fft_rect_win.o
+	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(RADAR_SIGNAL_PROCESSING_OBJS) $(LIBS)
+
+n2_fft_test:		n2_fft_test.o
 	$(CC) -o $@ $< $(MATH_TECH_OBJS) $(OGL_OBJS) $(RADAR_PRINCIPLES_OBJS) $(RADAR_SIGNAL_PROCESSING_OBJS) $(LIBS)
 
 .c.o:

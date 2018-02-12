@@ -13,6 +13,7 @@ LFM_SIGNAL = $(MAIN)/lfm_signal
 LFM_SPECTRUM = $(MAIN)/lfm_spectrum
 BLUESTEIN_FFT_TEST = $(MAIN)/bluestein_fft_test
 FFT_RECT_WIN = $(MAIN)/fft_rect_win
+N2_FFT_TEST = $(MAIN)/n2_fft_test
 
 SUBDIRS = $(MATH) $(RADAR_PRINCIPLES) $(OGL) $(RADAR_SIGNAL_PROCESSING)
 
@@ -24,6 +25,7 @@ all:	main
 	$(shell cp $(LFM_SPECTRUM) ./build/)
 	$(shell cp $(BLUESTEIN_FFT_TEST) ./build/)
 	$(shell cp $(FFT_RECT_WIN) ./build/)
+	$(shell cp $(N2_FFT_TEST) ./build/)
 
 main:	_all
 	$(MAKE) -C $(MAIN)
