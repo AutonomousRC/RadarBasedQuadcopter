@@ -19,6 +19,7 @@ int calc_align_idx(int num)
 }
 #endif
 
+// first case x_num 32, y_num 256
 void n2_fft(double *x, complex *y, int x_num, int y_num)
 {
 	bool tst;
@@ -31,9 +32,21 @@ void n2_fft(double *x, complex *y, int x_num, int y_num)
 	double costab[129] = {0};
 	double sintab[129] = {0};
 
-	step = 2 * M_PI / 256;
+	int yn = y_num;
+	int ynm1 = yn - 1;
+	int ynm3 = yn - 3;
+	int ynd2 = yn / 2;
+	int ynd2p1 = ynd2 + 1;
+	int ynd4 = yn / 4;
 
-	for(i = 0; i < 129; i++)
+	int xn = x_num;
+	int xnm1 = xn - 1;
+
+	//step = 2 * M_PI / 256;
+	step = 2 * M_PI / yn;
+
+	//for(i = 0; i < 129; i++)
+	for(i = 0; i < ynd2p1; i++)
 	{
 		costab[i] = cos(t);
 		sintab[i] = -sin(t);
@@ -47,11 +60,13 @@ void n2_fft(double *x, complex *y, int x_num, int y_num)
 
 	ix = iy = ju = 0;
 
-	for(i = 0; i < 31; i++)
+	//for(i = 0; i < 31; i++)
+	for(i = 0; i < xnm1; i++)
 	{
 		res[iy].re = x[ix];
 		res[iy].im = 0.0;
-		iy = 256;
+		//iy = 256;
+		iy = yn;
 		tst = true;
 
 		while(tst)
@@ -68,7 +83,7 @@ void n2_fft(double *x, complex *y, int x_num, int y_num)
 	res[iy].re = x[ix];
 	res[iy].im = 0.0;
 
-	for(i = 0; i <= 255; i += 2)
+	for(i = 0; i <= ynm1; i += 2)
 	{
 		temp_re = res[i + 1].re;
 		temp_im = res[i + 1].im;
@@ -80,8 +95,10 @@ void n2_fft(double *x, complex *y, int x_num, int y_num)
 
 	iy = 2;
 	ix = 4;
-	ju = 64;
-	iheight = 253;
+	//ju = 64;
+	ju = ynd4;
+	//iheight = 253;
+	iheight = ynm3;
 
 	while(ju > 0)
 	{
@@ -97,7 +114,8 @@ void n2_fft(double *x, complex *y, int x_num, int y_num)
 
 		istart = 1;
 
-		for(j = ju; j < 128; j += ju)
+		//for(j = ju; j < 128; j += ju)
+		for(j = ju; j < ynd2; j += ju)
 		{
 			twid_re = costab[j];
 			twid_im = sintab[j];
