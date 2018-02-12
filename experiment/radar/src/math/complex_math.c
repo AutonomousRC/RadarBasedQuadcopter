@@ -18,7 +18,8 @@ void complex_abs(complex *x, double *y, int data_num)
 	int i;
 	double temp_re, temp_im;
 
-	for(i = 0; i < 800; i++)
+	//for(i = 0; i < 800; i++)
+	for(i = 0; i < data_num; i++)
 	{
 		temp_re = fabs(x[i].re);
 		temp_im = fabs(x[i].im);

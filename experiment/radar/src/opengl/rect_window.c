@@ -1,8 +1,11 @@
 #include "radar_basic.h"
+#include "n2_fft.h"
 #include "ogl_helper.h"
+#include "complex_math.h"
 #include "math_tech.h"
 #include "init_require_data.h"
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #define	SAMPLE		800
@@ -47,6 +50,71 @@ void draw_lfm_fft(void)
 
 void draw_rect_windowed_fft(void)
 {
+	int i, cache = 0;
+	double max, min, cx, cy, epsilon = 0.001;
+	complex freq[256] = {0};
+	double sample[32] = {0};
+	double freq_amp[256] = {0};
+	double tmp[256] = {0};
+
+	for(i = 0; i < 32; i++)
+		sample[i] = 1.0;
+
+	n2_fft(sample, freq, 32, 256);
+	complex_abs(freq, freq_amp, 256);
+
+#if 0
+	for(i = 0; i < 256; i++)
+		printf("freq_amp[%d] = %lf\n", i, freq_amp[i]);
+#endif
+
+	memcpy(&tmp[0], &freq_amp[0], sizeof(double) * 256);
+	max = find_max(tmp, 256);
+
+#if 0
+	for(i = 0; i < 256; i++)
+		printf("freq_amp[%d] = %lf\n", i, freq_amp[i]);
+#endif
+
+#if 0
+	printf("max = %lf\n", max);
+#endif
+
+	divide_vec(freq_amp, max, 256);
+
+#if 0
+	for(i = 0; i < 256; i++)
+		printf("freq_amp[%d] = %lf\n", i, freq_amp[i]);
+#endif
+
+	volt_base_log(freq_amp, epsilon, 256);
+	memcpy(&tmp[0], &freq_amp[0], sizeof(double) * 256);
+	min = find_min(tmp, 256);
+	//max = find_max(tmp, 256);
+	//printf("min = %lf\n", min);
+	//printf("max = %lf\n", max);
+
+#if 0
+	for(i = 0; i < 256; i++)
+		printf("freq_amp[%d] = %lf\n", i, freq_amp[i]);
+#endif
+
+	glBegin(GL_LINES);
+
+        for(i = 0; i < 256; i++)
+        {
+                if(cache)
+                {
+                        glVertex2f(-130 + i * (260.0 / 256.0), 80.0 + freq_amp[i] * (-160.0 / min));
+                        glVertex2f(-130 + cx * (260.0 / 256.0), 80.0 + cy * (-160.0 / min));
+                }
+
+                cache = 1;
+                cx = i;
+                cy = freq_amp[i];
+        }
+
+        glEnd();
 }
 
 void rect_window(void)

@@ -51,3 +51,75 @@ void p_arr(double *arr, int num)
         for(i = 0; i < num; i++)
                 printf("arr[%d] = %.12lf\n", i, arr[i]);
 }
+
+void swap(double *arr, int left, int right)
+{
+	int tmp;
+	tmp = arr[left];
+	arr[left] = arr[right];
+	arr[right] = tmp;
+}
+
+int partition(double *arr, int left, int right, int pivot_idx)
+{
+	int pivot_val = arr[pivot_idx];
+	int store_idx = left;
+	int i;
+
+	swap(arr, pivot_idx, right);
+
+	for(i = left; i < right; i++)
+		if(arr[i] <= pivot_val)
+		{
+			swap(arr, i, store_idx);
+			++store_idx;
+		}
+
+	swap(arr, store_idx, right);
+	return store_idx;
+}
+
+void quicksort(double *arr, int left, int right)
+{
+	int pivot_idx = left;
+	int pivot_new_idx;
+
+loop:
+	if(right > left)
+	{
+		pivot_new_idx = partition(arr, left, right, pivot_idx);
+		quicksort(arr, left, pivot_new_idx - 1);
+		pivot_idx = left = pivot_new_idx + 1;
+		goto loop;
+	}
+}
+
+double find_max(double *data, int num)
+{
+	quicksort(data, 0, num - 1);
+
+	return data[num - 1];
+}
+
+double find_min(double *data, int num)
+{
+	quicksort(data, 0, num - 1);
+
+	return data[0];
+}
+
+void divide_vec(double *data, double div, int num)
+{
+	int i;
+
+	for(i = 0; i < num; i++)
+		data[i] /= div;
+}
+
+void volt_base_log(double *data, double eps, int num)
+{
+	int i;
+
+	for(i = 0; i < num; i++)
+		data[i] = 20 * log10(data[i] + eps);
+}
