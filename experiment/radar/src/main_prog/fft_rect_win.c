@@ -7,7 +7,7 @@
 
 int main(int argc, char **argv)
 {
-	char str[25] = "LFM Waveform Spectrum";
+	char str[64] = "Rectangular Window Function";
 
 	ogl_init(argc, argv, str);
 	ogl_post_process(rect_window);

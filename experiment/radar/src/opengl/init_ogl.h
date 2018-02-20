@@ -7,6 +7,7 @@
 #include <GL/gl.h>
 
 void ogl_init(int, char **, char *);
+void ogl_3d_init(int, char **, char *);
 void ogl_post_process(void (*)(void));
 
 #endif
