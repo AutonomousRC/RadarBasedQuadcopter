@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 	char str[25] = "Draw 3D Torus";
 
 	ogl_3d_init(argc, argv, str);
-	ogl_post_process(draw_torus);
+	ogl_3d_post_process(draw_torus, torus_reshape, torus_timer);
 
 	return 0;
 }

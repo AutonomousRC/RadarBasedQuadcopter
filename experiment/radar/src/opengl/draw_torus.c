@@ -5,49 +5,42 @@
 #include <string.h>
 #include <math.h>
 
-#if 0
-typedef GLfloat GLTmatrix[16];
-typedef GLfloat GLTvector3[3];
-
-#define GLT_PI		3.14159265358979323846
-#define GLT_PI_DIV_180	0.017453292519943296
-#define gltDegToRad(x)	((x) * GLT_PI_DIV_180)
-#endif
-
-void gltScaleVector(GLTvector3 vVector, const GLfloat fScale)
+void glt_scale_vector(GLTvector3 v_vector, const GLfloat f_scale)
 {
-	vVector[0] *= fScale;
-	vVector[1] *= fScale;
-	vVector[2] *= fScale;
+	v_vector[0] *= f_scale;
+	v_vector[1] *= f_scale;
+	v_vector[2] *= f_scale;
 }
 
-GLfloat gltGetVectorLengthSqrd(const GLTvector3 vVector)
+GLfloat glt_get_vector_length_sqrt(const GLTvector3 v_vector)
 {
-	return pow(vVector[0], 2) + pow(vVector[1], 2) + pow(vVector[2], 2);
+	return pow(v_vector[0], 2) + pow(v_vector[1], 2) + pow(v_vector[2], 2);
 }
 
-GLfloat gltGetVectorLength(const GLTvector3 vVector)
+GLfloat glt_get_vector_length(const GLTvector3 v_vector)
 {
-	return (GLfloat)sqrt(gltGetVectorLengthSqrd(vVector));
+	return (GLfloat)sqrt(glt_get_vector_length_sqrt(v_vector));
 }
 
-void gltNormalizeVector(GLTvector3 vNormal)
+void glt_normalize_vector(GLTvector3 v_normal)
 {
-	GLfloat fLength = 1.0f / gltGetVectorLength(vNormal);
-	gltScaleVector(vNormal, fLength);
+	GLfloat f_length = 1.0f / glt_get_vector_length(v_normal);
+	glt_scale_vector(v_normal, f_length);
 }
 
-void gltDrawTorus(GLfloat majorRadius, GLfloat minorRadius, GLint numMajor, GLint numMinor)
+void glt_draw_torus(GLfloat major_radius, GLfloat minor_radius, GLint num_major, GLint num_minor)
 {
-	GLTvector3 vNormal;
-	double majorStep = 2.0f * GLT_PI / numMajor;
-	double minorStep = 2.0f * GLT_PI / numMinor;
+	GLTvector3 v_normal;
+	double major_step = 2.0f * GLT_PI / num_major;
+	double minor_step = 2.0f * GLT_PI / num_minor;
 	int i, j;
 
-	for(i = 0; i < numMajor; ++i)
+	//glColor3f(0.0f, 0.0f, 0.5f);
+
+	for(i = 0; i < num_major; ++i)
 	{
-		double a0 = i * majorStep;
-		double a1 = a0 + majorStep;
+		double a0 = i * major_step;
+		double a1 = a0 + major_step;
 
 		GLfloat x0 = (GLfloat)cos(a0);
 		GLfloat y0 = (GLfloat)sin(a0);
@@ -56,26 +49,26 @@ void gltDrawTorus(GLfloat majorRadius, GLfloat minorRadius, GLint numMajor, GLin
 
 		glBegin(GL_TRIANGLE_STRIP);
 
-		for(j = 0; j <= numMinor; ++j)
+		for(j = 0; j <= num_minor; ++j)
 		{
-			double b = j * minorStep;
+			double b = j * minor_step;
 			GLfloat c = (GLfloat)cos(b);
-			GLfloat r = minorRadius * c + majorRadius;
-			GLfloat z = minorRadius * (GLfloat)sin(b);
-			glTexCoord2f((float)(i) / (float)(numMajor), (float)(j) / (float)(numMinor));
+			GLfloat r = minor_radius * c + major_radius;
+			GLfloat z = minor_radius * (GLfloat)sin(b);
+			glTexCoord2f((float)(i) / (float)(num_major), (float)(j) / (float)(num_minor));
 
-			vNormal[0] = x0 * c;
-			vNormal[1] = y0 * c;
-			vNormal[2] = z / minorRadius;
+			v_normal[0] = x0 * c;
+			v_normal[1] = y0 * c;
+			v_normal[2] = z / minor_radius;
 
 			glVertex3f(x0 * r, y0 * r, z);
-			glTexCoord2f((float)(i + 1) / (float)(numMajor), (float)(j) / (float)(numMinor));
+			glTexCoord2f((float)(i + 1) / (float)(num_major), (float)(j) / (float)(num_minor));
 
-			vNormal[0] = x1 * c;
-			vNormal[1] = y1 * c;
-			vNormal[2] = z / minorRadius;
+			v_normal[0] = x1 * c;
+			v_normal[1] = y1 * c;
+			v_normal[2] = z / minor_radius;
 
-			glNormal3fv(vNormal);
+			glNormal3fv(v_normal);
 			glVertex3f(x1 * r, y1 * r, z);
 		}
 
@@ -83,7 +76,7 @@ void gltDrawTorus(GLfloat majorRadius, GLfloat minorRadius, GLint numMajor, GLin
 	}
 }
 
-void gltLoadIdentityMatrix(GLTmatrix m)
+void glt_load_identity_matrix(GLTmatrix m)
 {
 	static GLTmatrix identity = {	1.0f, 0.0f, 0.0f, 0.0f,
 					0.0f, 1.0f, 0.0f, 0.0f,
@@ -92,26 +85,26 @@ void gltLoadIdentityMatrix(GLTmatrix m)
 	memcpy(m, identity, sizeof(GLTmatrix));
 }
 
-void gltRotationMatrix(float angle, float x, float y, float z, GLTmatrix mMatrix)
+void glt_rotation_matrix(float angle, float x, float y, float z, GLTmatrix m_matrix)
 {
-	float vecLength, sinSave, cosSave, oneMinusCos;
+	float vec_length, sin_save, cos_save, one_minus_cos;
 	float xx, yy, zz, xy, yz, zx, xs, ys, zs;
 
 	if(x == 0.0f && y == 0.0f && z == 0.0f)
 	{
-		gltLoadIdentityMatrix(mMatrix);
+		glt_load_identity_matrix(m_matrix);
 		return;
 	}
 
-	vecLength = (float)sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+	vec_length = (float)sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 
-	x /= vecLength;
-	y /= vecLength;
-	z /= vecLength;
+	x /= vec_length;
+	y /= vec_length;
+	z /= vec_length;
 
-	sinSave = (float)sin(angle);
-	cosSave = (float)cos(angle);
-	oneMinusCos = 1.0f - cosSave;
+	sin_save = (float)sin(angle);
+	cos_save = (float)cos(angle);
+	one_minus_cos = 1.0f - cos_save;
 
 	xx = pow(x, 2);
 	yy = pow(y, 2);
@@ -119,29 +112,29 @@ void gltRotationMatrix(float angle, float x, float y, float z, GLTmatrix mMatrix
 	xy = x * y;
 	yz = y * z;
 	zx = z * x;
-	xs = x * sinSave;
-	ys = y * sinSave;
-	zs = z * sinSave;
+	xs = x * sin_save;
+	ys = y * sin_save;
+	zs = z * sin_save;
 
-	mMatrix[0] = (oneMinusCos * xx) + cosSave;
-	mMatrix[4] = (oneMinusCos * xy) - zs;
-	mMatrix[8] = (oneMinusCos * zx) + ys;
-	mMatrix[12] = 0.0f;
+	m_matrix[0] = (one_minus_cos * xx) + cos_save;
+	m_matrix[4] = (one_minus_cos * xy) - zs;
+	m_matrix[8] = (one_minus_cos * zx) + ys;
+	m_matrix[12] = 0.0f;
 
-	mMatrix[1] = (oneMinusCos * xy) + zs;
-	mMatrix[5] = (oneMinusCos * yy) + cosSave;
-	mMatrix[9] = (oneMinusCos * yz) - xs;
-	mMatrix[13] = 0.0f;
+	m_matrix[1] = (one_minus_cos * xy) + zs;
+	m_matrix[5] = (one_minus_cos * yy) + cos_save;
+	m_matrix[9] = (one_minus_cos * yz) - xs;
+	m_matrix[13] = 0.0f;
 
-	mMatrix[2] = (oneMinusCos * zx) - ys;
-	mMatrix[6] = (oneMinusCos * yz) + xs;
-	mMatrix[10] = (oneMinusCos * zz) + cosSave;
-	mMatrix[14] = 0.0f;
+	m_matrix[2] = (one_minus_cos * zx) - ys;
+	m_matrix[6] = (one_minus_cos * yz) + xs;
+	m_matrix[10] = (one_minus_cos * zz) + cos_save;
+	m_matrix[14] = 0.0f;
 
-	mMatrix[3] = 0.0f;
-	mMatrix[7] = 0.0f;
-	mMatrix[11] = 0.0f;
-	mMatrix[15] = 1.0f;
+	m_matrix[3] = 0.0f;
+	m_matrix[7] = 0.0f;
+	m_matrix[11] = 0.0f;
+	m_matrix[15] = 1.0f;
 }
 
 void draw_torus(void)
@@ -153,14 +146,40 @@ void draw_torus(void)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	gltRotationMatrix(gltDegToRad(y_rot), 0.0f, 1.0f, 0.f, transform_mat);
+	glt_rotation_matrix(DEG2RAD(y_rot), 0.0f, 1.0f, 0.f, transform_mat);
 	transform_mat[12] = 0.0f;
 	transform_mat[13] = 0.0f;
 	transform_mat[14] = -2.5f;
 
 	glLoadMatrixf(transform_mat);
 
-	gltDrawTorus(0.35f, 0.15f, 40, 20);
+	glt_draw_torus(0.35f, 0.15f, 40, 20);
 
 	glutSwapBuffers();
+}
+
+void torus_reshape(int w, int h)
+{
+	GLfloat f_aspect;
+
+	if(h == 0)
+		h = 1;
+
+	glViewport(0, 0, w, h);
+
+	f_aspect = (GLfloat)w / (GLfloat)h;
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	gluPerspective(35.0f, f_aspect, 1.0f, 50.0f);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
+void torus_timer(int val)
+{
+	glutPostRedisplay();
+	glutTimerFunc(33, torus_timer, 1);
 }
