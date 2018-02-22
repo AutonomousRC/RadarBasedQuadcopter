@@ -16,6 +16,7 @@ FFT_RECT_WIN = $(MAIN)/fft_rect_win
 N2_FFT_TEST = $(MAIN)/n2_fft_test
 TORUS_3D = $(MAIN)/torus_3d
 FFT_HAMMING_WIN = $(MAIN)/fft_hamming_win
+FFT_HANNING_WIN = $(MAIN)/fft_hanning_win
 
 SUBDIRS = $(MATH) $(RADAR_PRINCIPLES) $(OGL) $(RADAR_SIGNAL_PROCESSING)
 
@@ -30,6 +31,7 @@ all:	main
 	$(shell cp $(N2_FFT_TEST) ./build/)
 	$(shell cp $(TORUS_3D) ./build/)
 	$(shell cp $(FFT_HAMMING_WIN) ./build/)
+	$(shell cp $(FFT_HANNING_WIN) ./build/)
 
 main:	_all
 	$(MAKE) -C $(MAIN)
