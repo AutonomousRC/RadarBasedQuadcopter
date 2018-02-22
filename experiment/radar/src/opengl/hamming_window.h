@@ -6,7 +6,8 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 
-void draw_rect_windowed_fft(void);
-void rect_window(void);
+void set_hamming(double *, int);
+void draw_hamming_windowed_fft(void);
+void hamming_window(void);
 
 #endif
