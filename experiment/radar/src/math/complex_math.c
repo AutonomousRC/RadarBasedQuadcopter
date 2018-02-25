@@ -28,6 +28,18 @@ void complex_abs(complex *x, double *y, int data_num)
 	}
 }
 
+void complex_sqrt(complex *z)
+{
+	double b, c;
+	double tmp1, tmp2;
+	b = -z->re;
+	c = -pow((fabs(z->im) / 2.0), 2.0);
+	//tmp1 = (-b + sqrt(pow(b, 2.0) - 4.0 * c)) / 2.0;
+	//tmp2 = (-b - sqrt(pow(b, 2.0) - 4.0 * c)) / 2.0;
+	z->re = (-b + sqrt(pow(b, 2.0) - 4.0 * c)) / 2.0;
+	z->im = (-b - sqrt(pow(b, 2.0) - 4.0 * c)) / 2.0;
+}
+
 void print_complex(complex *data, int data_num)
 {
 	int i;

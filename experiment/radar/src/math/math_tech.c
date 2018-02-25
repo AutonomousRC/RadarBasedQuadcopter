@@ -123,3 +123,8 @@ void volt_base_log(double *data, double eps, int num)
 	for(i = 0; i < num; i++)
 		data[i] = 20 * log10(data[i] + eps);
 }
+
+double dist_2d(double x, double y)
+{
+	return sqrt(pow(x, 2) + pow(y, 2));
+}

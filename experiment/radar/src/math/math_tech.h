@@ -1,6 +1,8 @@
 #ifndef __PULSE_TRAIN_H__
 #define __PULSE_TRAIN_H__
 
+#define RT_PI		3.14159265358979323846
+
 float angle2radian(float);
 float get_wavelength(float);
 void slice_section(double, double, double, double *);
@@ -14,5 +16,6 @@ double find_max(double *, int);
 double find_min(double *, int);
 void divide_vec(double *, double, int);
 void volt_base_log(double *, double, int);
+double dist_2d(double, double);
 
 #endif
