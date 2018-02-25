@@ -1,5 +1,5 @@
-#ifndef __LFM_FFT_H__
-#define __LFM_FFT_H__
+#ifndef __HANNING_WINDOW_H__
+#define __HANNING_WINDOW_H__
 
 #include <time.h>
 

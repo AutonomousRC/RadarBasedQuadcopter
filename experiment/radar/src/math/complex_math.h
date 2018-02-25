@@ -16,6 +16,7 @@ typedef struct
 void euler_formula(double *, complex *, int);
 void complex_abs(complex *, double *, int);
 void complex_sqrt(complex *);
+void complex_div(complex *, complex *, double *, int);
 void print_complex(complex *, int);
 
 #endif

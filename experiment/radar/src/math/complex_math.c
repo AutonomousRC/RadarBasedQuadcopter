@@ -40,6 +40,14 @@ void complex_sqrt(complex *z)
 	z->im = (-b - sqrt(pow(b, 2.0) - 4.0 * c)) / 2.0;
 }
 
+void complex_div(complex *z1, complex *z2, double *res, int num)
+{
+	int i;
+
+	for(i = 0; i < num; i++)
+		res[i] = z1[i].re / z2[i].re;
+}
+
 void print_complex(complex *data, int data_num)
 {
 	int i;

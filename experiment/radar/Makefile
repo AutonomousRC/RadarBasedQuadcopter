@@ -18,6 +18,7 @@ TORUS_3D = $(MAIN)/torus_3d
 FFT_HAMMING_WIN = $(MAIN)/fft_hamming_win
 FFT_HANNING_WIN = $(MAIN)/fft_hanning_win
 BESSEL_TEST = $(MAIN)/bessel_test
+FFT_KAISER_WIN = $(MAIN)/fft_kaiser_win
 
 SUBDIRS = $(MATH) $(RADAR_PRINCIPLES) $(OGL) $(RADAR_SIGNAL_PROCESSING)
 
@@ -34,6 +35,7 @@ all:	main
 	$(shell cp $(FFT_HAMMING_WIN) ./build/)
 	$(shell cp $(FFT_HANNING_WIN) ./build/)
 	$(shell cp $(BESSEL_TEST) ./build/)
+	$(shell cp $(FFT_KAISER_WIN) ./build/)
 
 main:	_all
 	$(MAKE) -C $(MAIN)

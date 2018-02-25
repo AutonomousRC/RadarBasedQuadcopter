@@ -82,7 +82,8 @@ void p_arr(double *arr, int num)
 
 void draw_rcs_dr_curve(void)
 {
-	int i, j;
+	int i, j, cache = 0;
+	double cx, cy;
 
 	for(i = 0; i < 3; i++)
 	{
@@ -93,14 +94,25 @@ void draw_rcs_dr_curve(void)
 		else if(i == 2)
 			glColor3f(240.0/255.0, 90.0/255.0, 53.0/255.0);
 
+		cache = 0;
+		cx = 0;
+		cy = 0;
+
 		glBegin(GL_LINES);
 
 		for(j = 0; j < 1000; j++)
 		{
-			glVertex2f(range_conv[j], snr_conv[i][j]);
+			if(cache)
+			{
+				glVertex2f(range_conv[j], snr_conv[i][j]);
+				glVertex2f(cx, cy);
+			}
 			//glVertex2f(range[j] - 150.0 + (j * v_interval), snr[i][j] * h_ratio - 80.0 + (j * h_interval));
 			//glVertex2f(range[j] * v_ratio, snr[i][j] * h_ratio);
 			//printf("range[%d] = %lf, snr[%d][%d] = %lf\n", j, range[j], i, j, snr[i][j]);
+			cache = 1;
+			cx = range_conv[j];
+			cy = snr_conv[i][j];
 		}
 
 		glEnd();

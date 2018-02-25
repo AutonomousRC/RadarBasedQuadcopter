@@ -4,22 +4,36 @@
 #include "complex_math.h"
 #include "math_tech.h"
 #include "init_require_data.h"
-#include "hamming_window.h"
+#include "kaiser_window.h"
+#include "zeroth_modify_bessel.h"
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
 #define	SAMPLE		800
 
-void set_hamming(double *data, int num)
+void set_kaiser(double *data, int num)
 {
 	int i;
+	double tmp1[32] = {0};
+	double tmp2[32] = {0};
+
+	complex z1[32] = {0};
+	complex z2[32] = {0};
 
 	for(i = 0; i < num; i++)
-		data[i] = 0.54 - 0.46 * cos(2 * M_PI * i / (num - 1));
+	{
+		tmp1[i] = 5 * sqrt(1 - pow(((i - (num - 1) / 2.0) / ((num - 1) / 2.0)), 2.0));
+		tmp2[i] = 5;
+	}
+
+	zeroth_modify_bessel(tmp1, z1, 32);
+	zeroth_modify_bessel(tmp2, z2, 1);
+
+	complex_div(z1, z2, data, 32);
 }
 
-void draw_hamming_windowed_fft(void)
+void draw_kaiser_windowed_fft(void)
 {
 	int i, cache = 0;
 	double max, min, cx, cy, epsilon = 0.001;
@@ -28,46 +42,19 @@ void draw_hamming_windowed_fft(void)
 	double freq_amp[256] = {0};
 	double tmp[256] = {0};
 
-	set_hamming(sample, 32);
+	set_kaiser(sample, 32);
 
 	n2_fft(sample, freq, 32, 256);
 	complex_abs(freq, freq_amp, 256);
 
-#if 0
-	for(i = 0; i < 256; i++)
-		printf("freq_amp[%d] = %lf\n", i, freq_amp[i]);
-#endif
-
 	memcpy(&tmp[0], &freq_amp[0], sizeof(double) * 256);
 	max = find_max(tmp, 256);
 
-#if 0
-	for(i = 0; i < 256; i++)
-		printf("freq_amp[%d] = %lf\n", i, freq_amp[i]);
-#endif
-
-#if 0
-	printf("max = %lf\n", max);
-#endif
-
 	divide_vec(freq_amp, max, 256);
-
-#if 0
-	for(i = 0; i < 256; i++)
-		printf("freq_amp[%d] = %lf\n", i, freq_amp[i]);
-#endif
 
 	volt_base_log(freq_amp, epsilon, 256);
 	memcpy(&tmp[0], &freq_amp[0], sizeof(double) * 256);
 	min = find_min(tmp, 256);
-	//max = find_max(tmp, 256);
-	//printf("min = %lf\n", min);
-	//printf("max = %lf\n", max);
-
-#if 0
-	for(i = 0; i < 256; i++)
-		printf("freq_amp[%d] = %lf\n", i, freq_amp[i]);
-#endif
 
 	glBegin(GL_LINES);
 
@@ -87,7 +74,7 @@ void draw_hamming_windowed_fft(void)
         glEnd();
 }
 
-void hamming_window(void)
+void kaiser_window(void)
 {
 	static char label[100];
 	float vert[11] = {0};
@@ -118,7 +105,7 @@ void hamming_window(void)
 
 	glColor3f(1, 0, 0);
 
-	draw_hamming_windowed_fft();
+	draw_kaiser_windowed_fft();
 
 	glutSwapBuffers();
 }
