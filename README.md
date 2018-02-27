@@ -22,3 +22,14 @@ Radar Based Quadcopter
 
 export CFLAGS="-g -O0 -DDEBUG"  
 make
+
+# Results
+
+![radar_range_equation](./images/radar_range_equation.png)
+![lfm_modulation](./images/LFM_Modulation.png)
+![lfm_spectrum](./images/LFM_Spectrum.png)
+![rectangular_window](./images/RectangularWindow.png)
+![hamming](./images/hamming.png)
+![hanning](./images/hanning.png)
+![kaiser1](./images/kaiser.png)
+![kaiser2](./images/kaiser2.png)

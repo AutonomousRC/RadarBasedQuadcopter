@@ -12,7 +12,7 @@
 
 #define	SAMPLE		800
 
-void set_kaiser(double *data, int num)
+void set_kaiser(double *data, int num, int beta)
 {
 	int i;
 	double tmp1[32] = {0};
@@ -23,8 +23,8 @@ void set_kaiser(double *data, int num)
 
 	for(i = 0; i < num; i++)
 	{
-		tmp1[i] = 5 * sqrt(1 - pow(((i - (num - 1) / 2.0) / ((num - 1) / 2.0)), 2.0));
-		tmp2[i] = 5;
+		tmp1[i] = beta * sqrt(1 - pow(((i - (num - 1) / 2.0) / ((num - 1) / 2.0)), 2.0));
+		tmp2[i] = beta;
 	}
 
 	zeroth_modify_bessel(tmp1, z1, 32);
@@ -33,7 +33,7 @@ void set_kaiser(double *data, int num)
 	complex_div(z1, z2, data, 32);
 }
 
-void draw_kaiser_windowed_fft(void)
+void draw_kaiser_windowed_fft(int beta)
 {
 	int i, cache = 0;
 	double max, min, cx, cy, epsilon = 0.001;
@@ -42,7 +42,7 @@ void draw_kaiser_windowed_fft(void)
 	double freq_amp[256] = {0};
 	double tmp[256] = {0};
 
-	set_kaiser(sample, 32);
+	set_kaiser(sample, 32, beta);
 
 	n2_fft(sample, freq, 32, 256);
 	complex_abs(freq, freq_amp, 256);
@@ -105,7 +105,11 @@ void kaiser_window(void)
 
 	glColor3f(1, 0, 0);
 
-	draw_kaiser_windowed_fft();
+	draw_kaiser_windowed_fft(5.0);
+	glColor3f(36.0/255.0, 143.0/255.0, 232.0/255.0);
+	draw_kaiser_windowed_fft(M_PI);
+	glColor3f(40.0/255.0, 227.0/255.0, 181.0/255.0);
+	draw_kaiser_windowed_fft(1.5);
 
 	glutSwapBuffers();
 }
