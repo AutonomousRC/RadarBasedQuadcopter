@@ -52,7 +52,7 @@ void draw_rect_windowed_fft(void)
 {
 	int i, cache = 0;
 	double max, min, cx, cy, epsilon = 0.001;
-	complex freq[256] = {0};
+	comp freq[256] = {0};
 	double sample[32] = {0};
 	double freq_amp[256] = {0};
 	double tmp[256] = {0};

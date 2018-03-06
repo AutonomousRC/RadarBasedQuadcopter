@@ -8,7 +8,7 @@
 
 void lfm_fft(void);
 
-typedef struct complex
+typedef struct test_comp
 {
         double re;
         double im;

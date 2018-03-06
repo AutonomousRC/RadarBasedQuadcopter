@@ -16,10 +16,10 @@ float rtNaNF;
 float rtInfF;
 float rtMinusInfF;
 
-void zeroth_modify_bessel(double *data, complex *z, int num)
+void zeroth_modify_bessel(double *data, comp *z, int num)
 {
 	double y[32];
-	complex zd, b_w;
+	comp zd, b_w;
 	int k, b_k, ierr, unused;
 
 	memcpy(&y[0], &data[0], sizeof(double) << 5);
@@ -49,13 +49,13 @@ void zeroth_modify_bessel(double *data, complex *z, int num)
 	}
 }
 
-int casyi(complex z, double fnu, int kode, int nin, complex *y, double rl, double tol, double elim)
+int casyi(comp z, double fnu, int kode, int nin, comp *y, double rl, double tol, double elim)
 {
 	int i;
 	int nz;
 	int n;
 	double x;
-	complex ak1;
+	comp ak1;
 	double brm;
 	double acz;
 	double s;
@@ -87,7 +87,7 @@ int casyi(complex z, double fnu, int kode, int nin, complex *y, double rl, doubl
 	bool errflag;
 	bool exitg2;
 	double b_cz_re;
-	complex test = {2, 2};
+	comp test = {2, 2};
 
 	printf("casyi\n");
 
@@ -382,10 +382,10 @@ int casyi(complex z, double fnu, int kode, int nin, complex *y, double rl, doubl
 	return nz;
 }
 
-void cbesi(complex z, double fnu, int kode, complex *cy, int *nz, int *ierr)
+void cbesi(comp z, double fnu, int kode, comp *cy, int *nz, int *ierr)
 {
 	double AZ;
-	complex zn;
+	comp zn;
 	double csgn_re;
 	double csgn_im;
 	int inu;
@@ -395,7 +395,7 @@ void cbesi(complex z, double fnu, int kode, complex *cy, int *nz, int *ierr)
 	bool guard2 = false;
 	bool guard3 = false;
 	int nw;
-	complex cw[2];
+	comp cw[2];
 	double b_AZ;
 	int b_dfnu;
 	*ierr = 0;
@@ -670,24 +670,24 @@ void cbesi(complex z, double fnu, int kode, complex *cy, int *nz, int *ierr)
 }
 
 #if 0
-void b_cuni2(const complex z, double fnu, int kode, int nin, complex y[2],
+void b_cuni2(const comp z, double fnu, int kode, int nin, comp y[2],
 		double fnul, double tol, double elim, double alim, int
 		*nlast, int *nz);
-void cuni1(const complex z, double fnu, int kode, int nin, complex *y,
+void cuni1(const comp z, double fnu, int kode, int nin, comp *y,
 		double tol, double elim, double alim, int *nlast, int *nz);
-void cuni2(const complex z, double fnu, int kode, int nin, complex *y,
+void cuni2(const comp z, double fnu, int kode, int nin, comp *y,
 		double tol, double elim, double alim, int *nlast, int *nz);
 #endif
 
 /* Function Definitions */
-void b_cuni2(complex z, double fnu, int kode, int nin, complex y[2], double fnul, double tol, double elim, double alim, int *nlast, int *nz)
+void b_cuni2(comp z, double fnu, int kode, int nin, comp y[2], double fnul, double tol, double elim, double alim, int *nlast, int *nz)
 {
 	int n;
 	double cssr[3];
 	double csrr[3];
 	double bry1;
 	double yy;
-	complex zn;
+	comp zn;
 	double zb_re;
 	double zb_im;
 	signed char cid_im;
@@ -701,12 +701,12 @@ void b_cuni2(complex z, double fnu, int kode, int nin, complex y[2], double fnul
 	static const char_complex icv1[4] = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
 
 	double b_fnu;
-	complex dai;
-	complex s1;
-	complex zeta1;
-	complex zeta2;
-	complex ai;
-	complex unusedU7;
+	comp dai;
+	comp s1;
+	comp zeta1;
+	comp zeta2;
+	comp ai;
+	comp unusedU7;
 	double br;
 	double bi;
 	double rs1;
@@ -719,9 +719,9 @@ void b_cuni2(complex z, double fnu, int kode, int nin, complex y[2], double fnul
 	double b_bi;
 	bool exitg2;
 	double fn;
-	complex phi;
-	complex asum;
-	complex bsum;
+	comp phi;
+	comp asum;
+	comp bsum;
 	bool guard1 = false;
 
 	if(nin <= 2)
@@ -1047,7 +1047,7 @@ void b_cuni2(complex z, double fnu, int kode, int nin, complex y[2], double fnul
 	}
 }
 
-void cuni1(complex z, double fnu, int kode, int nin, complex *y, double tol, double elim, double alim, int *nlast, int *nz)
+void cuni1(comp z, double fnu, int kode, int nin, comp *y, double tol, double elim, double alim, int *nlast, int *nz)
 {
 	int n;
 	double cssr[3];
@@ -1055,11 +1055,11 @@ void cuni1(complex z, double fnu, int kode, int nin, complex *y, double tol, dou
 	double bry1;
 	double fn;
 	int iflag;
-	complex cwrk[16];
-	complex s1;
-	complex zeta1;
-	complex zeta2;
-	complex unusedU1;
+	comp cwrk[16];
+	comp s1;
+	comp zeta1;
+	comp zeta2;
+	comp unusedU1;
 	double br;
 	double bi;
 	double rs1;
@@ -1067,7 +1067,7 @@ void cuni1(complex z, double fnu, int kode, int nin, complex *y, double tol, dou
 	bool goto_mw110;
 	bool exitg1;
 	double b_br;
-	complex summ;
+	comp summ;
 	double b_bi;
 	bool guard1 = false;
 	double sgnbr;
@@ -1093,7 +1093,7 @@ void cuni1(complex z, double fnu, int kode, int nin, complex *y, double tol, dou
 		fn = 1.0;
 
 	iflag = 0;
-	memset(&cwrk[0], 0, sizeof(complex) << 4);
+	memset(&cwrk[0], 0, sizeof(comp) << 4);
 	b_cunik(z, fn, 1, 1, tol, &iflag, cwrk, &s1, &zeta1, &zeta2, &unusedU1);
 
 	if(kode == 1)
@@ -1305,14 +1305,14 @@ void cuni1(complex z, double fnu, int kode, int nin, complex *y, double tol, dou
 	}
 }
 
-void cuni2(complex z, double fnu, int kode, int nin, complex *y, double tol, double elim, double alim, int *nlast, int *nz)
+void cuni2(comp z, double fnu, int kode, int nin, comp *y, double tol, double elim, double alim, int *nlast, int *nz)
 {
 	int n;
 	double cssr[3];
 	double csrr[3];
 	double bry1;
 	double yy;
-	complex zn;
+	comp zn;
 	double zb_re;
 	double zb_im;
 	signed char cid_im;
@@ -1325,21 +1325,21 @@ void cuni2(complex z, double fnu, int kode, int nin, complex *y, double tol, dou
 
 	double c2_im;
 	double b_fnu;
-	complex dai;
-	complex s1;
-	complex zeta1;
-	complex zeta2;
-	complex ai;
-	complex unusedU7;
+	comp dai;
+	comp s1;
+	comp zeta1;
+	comp zeta2;
+	comp ai;
+	comp unusedU7;
 	double bi;
 	double rs1;
 	bool goto_mw120;
 	bool exitg1;
 	double b_ang;
 	double fn;
-	complex phi;
-	complex asum;
-	complex bsum;
+	comp phi;
+	comp asum;
+	comp bsum;
 	double b_bi;
 	bool guard1 = false;
 
@@ -1622,7 +1622,7 @@ void cuni2(complex z, double fnu, int kode, int nin, complex *y, double tol, dou
 	}
 }
 
-void cbuni(complex z, double fnu, int kode, int nin, complex *y, int nui, double fnul, double tol, double elim, double alim, int *nlast, int *nz)
+void cbuni(comp z, double fnu, int kode, int nin, comp *y, int nui, double fnul, double tol, double elim, double alim, int *nlast, int *nz)
 {
 	int n;
 	int iform;
@@ -1630,7 +1630,7 @@ void cbuni(complex z, double fnu, int kode, int nin, complex *y, int nui, double
 	double dfnu;
 	int nw;
 	double gnu;
-	complex cy[2];
+	comp cy[2];
 	int nd;
 	double cssr[3];
 	double rs1;
@@ -1640,11 +1640,11 @@ void cbuni(complex z, double fnu, int kode, int nin, complex *y, int nui, double
 	int iflag;
 	double fn;
 	double dscl;
-	complex cwrk[16];
-	complex s2;
-	complex s1;
-	complex zeta2;
-	complex rz;
+	comp cwrk[16];
+	comp s2;
+	comp s1;
+	comp zeta2;
+	comp rz;
 	double dscr;
 	double brm;
 	int exitg1;
@@ -1726,7 +1726,7 @@ void cbuni(complex z, double fnu, int kode, int nin, complex *y, int nui, double
 				fn = 1.0;
 
 			iform = 0;
-			memset(&cwrk[0], 0, sizeof(complex) << 4);
+			memset(&cwrk[0], 0, sizeof(comp) << 4);
 			b_cunik(z, fn, 1, 1, tol, &iform, cwrk, &s2, &s1, &zeta2, &rz);
 
 			if(kode == 1)
@@ -2134,11 +2134,11 @@ void cbuni(complex z, double fnu, int kode, int nin, complex *y, int nui, double
 	}
 }
 
-int cwrsk(complex zr, double fnu, int kode, int nin, complex *y, complex cw[2], double tol, double elim, double alim)
+int cwrsk(comp zr, double fnu, int kode, int nin, comp *y, comp cw[2], double tol, double elim, double alim)
 {
 	int nz;
 	int n;
-	complex b_cw[2];
+	comp b_cw[2];
 	int magz;
 	int itime;
 	long long i3;
@@ -2461,12 +2461,12 @@ int cwrsk(complex zr, double fnu, int kode, int nin, complex *y, complex cw[2], 
 	return nz;
 }
 
-int b_ckscl(complex zr, int nin, complex y[2], double ascle, double tol, double elim)
+int b_ckscl(comp zr, int nin, comp y[2], double ascle, double tol, double elim)
 {
 	int nz;
 	int n;
 	int ic;
-	complex s1;
+	comp s1;
 
 	if(nin <= 2)
 		n = nin;
@@ -2530,9 +2530,9 @@ int b_ckscl(complex zr, int nin, complex y[2], double ascle, double tol, double 
 	return nz;
 }
 
-complex calccs(complex zr, complex s1, double tol)
+comp calccs(comp zr, comp s1, double tol)
 {
-	complex cs;
+	comp cs;
 	double tmp_re;
 	double tmp_im;
 	tmp_re = s1.re;
@@ -2558,10 +2558,10 @@ complex calccs(complex zr, complex s1, double tol)
 	return cs;
 }
 
-int ckscl(complex zr, complex *y, double elim)
+int ckscl(comp zr, comp *y, double elim)
 {
 	int nz;
-	complex s1;
+	comp s1;
 	s1 = *y;
 	nz = 1;
 	y->re = 0.0;
@@ -2581,7 +2581,7 @@ int ckscl(complex zr, complex *y, double elim)
 	return nz;
 }
 
-int b_cbknu(complex z, double fnu, int kode, int nin, complex y[2], double tol, double elim, double alim)
+int b_cbknu(comp z, double fnu, int kode, int nin, comp y[2], double tol, double elim, double alim)
 {
 	int nz;
 	int n;
@@ -2607,7 +2607,7 @@ int b_cbknu(complex z, double fnu, int kode, int nin, complex y[2], double tol, 
 	double s1_im;
 	double s2_re;
 	double s2_im;
-	complex zd;
+	comp zd;
 	double ck_re;
 	double ck_im;
 	int inub;
@@ -2617,27 +2617,27 @@ int b_cbknu(complex z, double fnu, int kode, int nin, complex y[2], double tol, 
 	bool guard1 = false;
 	bool guard2 = false;
 	bool goto_mw210;
-	complex cs;
-	complex p2;
+	comp cs;
+	comp p2;
 	double coef_re;
-	complex fmu;
+	comp fmu;
 	double coef_im;
 	int kflag;
 	double a2;
 	double t1;
 	int i;
 	bool exitg3;
-	complex f;
+	comp f;
 	static const double dv10[8] = { 0.57721566490153287, -0.042002635034095237,
 		-0.042197734555544333, 0.0072189432466631, -0.00021524167411495098,
 		-2.0134854780788239E-5, 1.1330272319816959E-6, 6.1160951044814161E-9 };
 
-	complex p1;
+	comp p1;
 	int k;
 	bool exitg2;
 	long long i2;
 	int j;
-	complex cy[2];
+	comp cy[2];
 	bool exitg1;
 	double b_etest;
 	bool b_guard1 = false;
@@ -3568,7 +3568,7 @@ int b_cbknu(complex z, double fnu, int kode, int nin, complex y[2], double tol, 
 	return nz;
 }
 
-void cbknu(complex z, double fnu, int kode, double alim, complex *y, int *nz)
+void cbknu(comp z, double fnu, int kode, double alim, comp *y, int *nz)
 {
 	double yy;
 	double caz;
@@ -3584,10 +3584,10 @@ void cbknu(complex z, double fnu, int kode, double alim, complex *y, int *nz)
 	double tm;
 	double ak;
 	double fhs;
-	complex s1;
+	comp s1;
 	double s2_re;
 	double s2_im;
-	complex zd;
+	comp zd;
 	double ck_re;
 	double ck_im;
 	int inub;
@@ -3597,15 +3597,15 @@ void cbknu(complex z, double fnu, int kode, double alim, complex *y, int *nz)
 	bool guard1 = false;
 	bool guard2 = false;
 	double a2;
-	complex coef;
-	complex smu;
-	complex fmu;
+	comp coef;
+	comp smu;
+	comp fmu;
 	int kflag;
 	double rk;
 	double t1;
 	int i;
 	bool exitg3;
-	complex p1;
+	comp p1;
 	static const double dv6[8] = { 0.57721566490153287, -0.042002635034095237,
 		-0.042197734555544333, 0.0072189432466631, -0.00021524167411495098,
 		-2.0134854780788239E-5, 1.1330272319816959E-6, 6.1160951044814161E-9 };
@@ -3623,7 +3623,7 @@ void cbknu(complex z, double fnu, int kode, double alim, complex *y, int *nz)
 	bool exitg2;
 	long long i1;
 	int j;
-	complex cy[2];
+	comp cy[2];
 	bool exitg1;
 	static const double dv9[3] = { 4.503599627370496E+15, 1.0, 2.2204460492503131E-16 };
 
@@ -4487,7 +4487,7 @@ void cbknu(complex z, double fnu, int kode, double alim, complex *y, int *nz)
 	}
 }
 
-int cmlri(complex z, double fnu, int kode, int nin, complex *y, double tol)
+int cmlri(comp z, double fnu, int kode, int nin, comp *y, double tol)
 {
 	int nz;
 	double az;
@@ -4936,7 +4936,7 @@ int cmlri(complex z, double fnu, int kode, int nin, complex *y, double tol)
 	return nz;
 }
 
-void b_cosh(complex *x)
+void b_cosh(comp *x)
 {
 	double x_re;
 	double x_im;
@@ -4955,7 +4955,7 @@ void b_cosh(complex *x)
 	}
 }
 
-void b_sinh(complex *x)
+void b_sinh(comp *x)
 {
 	double x_re;
 	double x_im;
@@ -4974,7 +4974,7 @@ void b_sinh(complex *x)
 	}
 }
 
-int cseri(complex z, double fnu, int kode, int nin, complex *y, double tol, double elim, double alim)
+int cseri(comp z, double fnu, int kode, int nin, comp *y, double tol, double elim, double alim)
 {
 	int nz;
 	int n;
@@ -4986,7 +4986,7 @@ int cseri(complex z, double fnu, int kode, int nin, complex *y, double tol, doub
 	double cz_re;
 	double cz_im;
 	double acz;
-	complex ck;
+	comp ck;
 	double ak;
 	double ascle;
 	double aa;
@@ -5166,7 +5166,7 @@ int cseri(complex z, double fnu, int kode, int nin, complex *y, double tol, doub
 	return nz;
 }
 
-int cuchk(complex y, double ascle, double tol)
+int cuchk(comp y, double ascle, double tol)
 {
 	int nz;
 	double yr;
@@ -5242,25 +5242,25 @@ double rt_powd_snf(double u0, double u1)
 	return y;
 }
 
-void b_cunhj(complex z, double fnu, int ipmtr, double tol, complex *phi, complex *arg, complex *zeta1, complex *zeta2, complex *asum, complex *bsum)
+void b_cunhj(comp z, double fnu, int ipmtr, double tol, comp *phi, comp *arg, comp *zeta1, comp *zeta2, comp *asum, comp *bsum)
 {
 	double rfnu;
-	complex up[14];
+	comp up[14];
 	double ac;
-	complex zb;
+	comp zb;
 	double rfnu2;
 	double fn23;
 	double rfn13_re;
-	complex w2;
+	comp w2;
 	int k;
-	complex w;
-	complex p[30];
+	comp w;
+	comp p[30];
 	double ap[30];
 	double pp;
-	complex suma;
+	comp suma;
 	int l1;
 	double brm;
-	complex zc;
+	comp zc;
 	bool exitg4;
 	double btol;
 	double d;
@@ -5427,8 +5427,8 @@ void b_cunhj(complex z, double fnu, int ipmtr, double tol, complex *phi, complex
 	double rzth_im;
 	int kp1;
 	int l;
-	complex cr[14];
-	complex dr[14];
+	comp cr[14];
+	comp dr[14];
 	bool exitg5;
 	static const double C[105] = { 1.0, -0.20833333333333334, 0.125,
 		0.3342013888888889, -0.40104166666666669, 0.0703125, -1.0258125964506173,
@@ -5478,7 +5478,7 @@ void b_cunhj(complex z, double fnu, int ipmtr, double tol, complex *phi, complex
 		1.7919020077753437E+6 };
 
 	rfnu = 1.0 / fnu;
-	memset(&up[0], 0, 14U * sizeof(complex));
+	memset(&up[0], 0, 14U * sizeof(comp));
 	ac = fnu * 2.2250738585072014E-305;
 	asum->re = 0.0;
 	asum->im = 0.0;
@@ -6148,7 +6148,7 @@ void b_cunhj(complex z, double fnu, int ipmtr, double tol, complex *phi, complex
 		else
 		{
 			k = 1;
-			memset(&p[0], 0, 30U * sizeof(complex));
+			memset(&p[0], 0, 30U * sizeof(comp));
 			memset(&ap[0], 0, 30U * sizeof(double));
 			p[0].re = 1.0;
 			p[0].im = 0.0;
@@ -6301,22 +6301,22 @@ void b_cunhj(complex z, double fnu, int ipmtr, double tol, complex *phi, complex
 	}
 }
 
-void cunhj(complex z, double fnu, double tol, complex *phi, complex *arg, complex *zeta1, complex *zeta2)
+void cunhj(comp z, double fnu, double tol, comp *phi, comp *arg, comp *zeta1, comp *zeta2)
 {
 	double ac;
-	complex zb;
+	comp zb;
 	double fn23;
 	double rfn13_re;
-	complex w2;
-	complex p[30];
+	comp w2;
+	comp p[30];
 	double ap[30];
 	double tmpr;
 	double tmpi;
-	complex suma;
+	comp suma;
 	int i;
 	bool exitg1;
 	double brm;
-	complex zc;
+	comp zc;
 	double p_im;
 	static const double GAMA[30] = { 0.6299605249474366, 0.25198420997897464,
 		0.15479030041565583, 0.11071306241615901, 0.085730939552739485,
@@ -6640,7 +6640,7 @@ void cunhj(complex z, double fnu, double tol, complex *phi, complex *arg, comple
 		}
 		else
 		{
-			memset(&p[0], 0, 30U * sizeof(complex));
+			memset(&p[0], 0, 30U * sizeof(comp));
 			memset(&ap[0], 0, 30U * sizeof(double));
 			p[0].re = 1.0;
 			p[0].im = 0.0;
@@ -6691,7 +6691,7 @@ void cunhj(complex z, double fnu, double tol, complex *phi, complex *arg, comple
 	}
 }
 
-void b_cunik(complex zr, double fnu, int ikflg, int ipmtr, double tol, int *init, complex cwrk[16], complex *phi, complex *zeta1, complex *zeta2, complex *summ)
+void b_cunik(comp zr, double fnu, int ikflg, int ipmtr, double tol, int *init, comp cwrk[16], comp *phi, comp *zeta1, comp *zeta2, comp *summ)
 {
 	double rfn;
 	double ac;
@@ -6700,7 +6700,7 @@ void b_cunik(complex zr, double fnu, int ikflg, int ipmtr, double tol, int *init
 	double t_im;
 	double s_re;
 	double s_im;
-	complex sr;
+	comp sr;
 	int i;
 	double b_t_re;
 	double cfn_re;
@@ -7083,9 +7083,9 @@ void b_cunik(complex zr, double fnu, int ikflg, int ipmtr, double tol, int *init
 	}
 }
 
-void cunik(complex zr, double fnu, int ikflg, int ipmtr, double tol, int init, complex *phi, complex *zeta1, complex *zeta2)
+void cunik(comp zr, double fnu, int ikflg, int ipmtr, double tol, int init, comp *phi, comp *zeta1, comp *zeta2)
 {
-	complex cwrk[16];
+	comp cwrk[16];
 	int i;
 	double rfn;
 	double ac;
@@ -7094,7 +7094,7 @@ void cunik(complex zr, double fnu, int ikflg, int ipmtr, double tol, int init, c
 	double t_im;
 	double s_re;
 	double s_im;
-	complex sr;
+	comp sr;
 	double b_t_re;
 	double cfn_re;
 	double ai;
@@ -7451,21 +7451,21 @@ void cunik(complex zr, double fnu, int ikflg, int ipmtr, double tol, int init, c
 	}
 }
 
-int b_cuoik(complex z, double fnu, int kode, int ikflg, int nin, complex y[2], double tol, double elim, double alim)
+int b_cuoik(comp z, double fnu, int kode, int ikflg, int nin, comp y[2], double tol, double elim, double alim)
 {
 	int nuf;
 	int n;
-	complex zr;
+	comp zr;
 	int iform;
 	double gnn;
 	double aarg;
-	complex arg;
-	complex an;
-	complex phi;
-	complex cz;
-	complex zeta2;
+	comp arg;
+	comp an;
+	comp phi;
+	comp cz;
+	comp zeta2;
 	bool guard1 = false;
-	complex ax;
+	comp ax;
 
 	if(nin <= 2)
 		n = nin;
@@ -7630,21 +7630,21 @@ int b_cuoik(complex z, double fnu, int kode, int ikflg, int nin, complex y[2], d
 	return nuf;
 }
 
-int cuoik(complex z, double fnu, int kode, int ikflg, int nin, complex *y, double tol, double elim, double alim)
+int cuoik(comp z, double fnu, int kode, int ikflg, int nin, comp *y, double tol, double elim, double alim)
 {
 	int nuf;
 	int n;
-	complex zr;
+	comp zr;
 	int iform;
 	double gnn;
 	double aarg;
-	complex arg;
-	complex an;
-	complex phi;
-	complex cz;
-	complex zeta2;
+	comp arg;
+	comp an;
+	comp phi;
+	comp cz;
+	comp zeta2;
 	bool guard1 = false;
-	complex ax;
+	comp ax;
 
 	if(nin <= 1)
 		n = nin;
@@ -7812,7 +7812,7 @@ int cuoik(complex z, double fnu, int kode, int ikflg, int nin, complex *y, doubl
 	return nuf;
 }
 
-void b_exp(complex *x)
+void b_exp(comp *x)
 {
 	double r;
 	double x_im;
@@ -8017,7 +8017,7 @@ void gammaln(double *x)
 	}
 }
 
-void b_log(complex *x)
+void b_log(comp *x)
 {
 	double x_im;
 	double x_re;
@@ -8278,7 +8278,7 @@ bool rtIsNaNF(float value)
 	return (value!=value)? 1U:0U;
 }
 
-void b_sqrt(complex *x)
+void b_sqrt(comp *x)
 {
 	double absxi;
 	double absxr;
@@ -8440,10 +8440,10 @@ double rt_hypotd_snf(double u0, double u1)
 	return y;
 }
 
-int cacai(complex z, double fnu, int kode, int mr, complex *y, double rl, double tol, double elim, double alim)
+int cacai(comp z, double fnu, int kode, int mr, comp *y, double rl, double tol, double elim, double alim)
 {
 	int nz;
-	complex zn;
+	comp zn;
 	double az;
 	bool guard1 = false;
 	int nw;
@@ -8452,7 +8452,7 @@ int cacai(complex z, double fnu, int kode, int mr, complex *y, double rl, double
 	double hz_re;
 	double hz_im;
 	double cz_re;
-	complex cy[2];
+	comp cy[2];
 	double cz_im;
 	double acz;
 	double ck_re;
@@ -8460,7 +8460,7 @@ int cacai(complex z, double fnu, int kode, int mr, complex *y, double rl, double
 	double ak1_re;
 	double ak1_im;
 	double ascle;
-	complex s2;
+	comp s2;
 	double coef_im;
 	double b_atol;
 	int exitg1;
@@ -8777,19 +8777,19 @@ int cacai(complex z, double fnu, int kode, int mr, complex *y, double rl, double
 	return nz;
 }
 
-complex cairy(const complex z, int id, int kode)
+comp cairy(const comp z, int id, int kode)
 {
-	complex ai;
+	comp ai;
 	double az;
 	double s1_re;
 	double az3;
 	double s1_im;
 	double r;
-	complex s2;
-	complex trm2;
+	comp s2;
+	comp trm2;
 	double aa;
 	int iflag;
-	complex trm1;
+	comp trm1;
 	double ak;
 	double atrm;
 	bool guard1 = false;

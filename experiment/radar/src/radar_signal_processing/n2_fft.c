@@ -20,10 +20,10 @@ int calc_align_idx(int num)
 #endif
 
 // first case x_num 32, y_num 256
-void n2_fft(double *x, complex *y, int x_num, int y_num)
+void n2_fft(double *x, comp *y, int x_num, int y_num)
 {
 	bool tst;
-	complex res[256] = {0};
+	comp res[256] = {0};
 	double temp_re, temp_im, twid_re, twid_im;
 	int i, ix, iy, j, ju, istart, iheight, ihi;
 
@@ -143,7 +143,7 @@ void n2_fft(double *x, complex *y, int x_num, int y_num)
 		iheight -= iy;
 	}
 
-	memcpy(&y[0], &res[0], sizeof(complex) << 8);
+	memcpy(&y[0], &res[0], sizeof(comp) << 8);
 }
 
 #if 0

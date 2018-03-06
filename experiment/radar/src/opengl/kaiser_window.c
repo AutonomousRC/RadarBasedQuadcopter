@@ -18,8 +18,8 @@ void set_kaiser(double *data, int num, int beta)
 	double tmp1[32] = {0};
 	double tmp2[32] = {0};
 
-	complex z1[32] = {0};
-	complex z2[32] = {0};
+	comp z1[32] = {0};
+	comp z2[32] = {0};
 
 	for(i = 0; i < num; i++)
 	{
@@ -37,7 +37,7 @@ void draw_kaiser_windowed_fft(int beta)
 {
 	int i, cache = 0;
 	double max, min, cx, cy, epsilon = 0.001;
-	complex freq[256] = {0};
+	comp freq[256] = {0};
 	double sample[32] = {0};
 	double freq_amp[256] = {0};
 	double tmp[256] = {0};

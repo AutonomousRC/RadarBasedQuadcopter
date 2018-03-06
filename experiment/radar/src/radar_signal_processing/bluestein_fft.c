@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <math.h>
 
-void bluestein_first(complex *x, int init, double *costab, double *sintab, complex *y, int data_num)
+void bluestein_first(comp *x, int init, double *costab, double *sintab, comp *y, int data_num)
 {
 	int i, j, ix, ju, iy, iheight, istart, ihi;
 	double temp_re, temp_im, twid_re, twid_im;
@@ -117,7 +117,7 @@ void bluestein_first(complex *x, int init, double *costab, double *sintab, compl
 	}
 }
 
-void bluestein_second(complex *x, double *costab, double *sintab, complex *y, int data_num)
+void bluestein_second(comp *x, double *costab, double *sintab, comp *y, int data_num)
 {
 	bool tst;
 	double temp_re, temp_im, twid_re, twid_im;
@@ -228,7 +228,7 @@ void bluestein_second(complex *x, double *costab, double *sintab, complex *y, in
 	}
 }
 
-void bluestein_third(complex *x, double *costab, double *sintab, complex *y, int data_num)
+void bluestein_third(comp *x, double *costab, double *sintab, comp *y, int data_num)
 {
 	int i, ix, iy, j, ju, iheight, istart, ihi;
 	double temp_re, temp_im, twid_re, twid_im;
@@ -343,7 +343,7 @@ void bluestein_third(complex *x, double *costab, double *sintab, complex *y, int
 	}
 }
 
-void set_bluestein(complex *wwc, int data_num)
+void set_bluestein(comp *wwc, int data_num)
 {
 	int i, rt, idx, y;
 	double nt_im;
@@ -415,7 +415,7 @@ int calc_align_idx(int num)
 	}
 }
 
-void bluestein_fft(complex *x, complex *y, int y_data_num)
+void bluestein_fft(comp *x, comp *y, int y_data_num)
 {
 	/* Can't Use this method because of heap corruption problem */
 
@@ -440,16 +440,16 @@ void bluestein_fft(complex *x, complex *y, int y_data_num)
 	int cdnp1 = cdn + 1;
 #endif
 #if 0
-	complex *wwc = NULL;
-	complex *res = NULL;
-	complex *fy = NULL;
-	complex *fv = NULL;
+	comp *wwc = NULL;
+	comp *res = NULL;
+	comp *fy = NULL;
+	comp *fv = NULL;
 #endif
-	complex wwc[1599] = {0};
-	complex res[800] = {0};
+	comp wwc[1599] = {0};
+	comp res[800] = {0};
 
-	complex fy[2048] = {0};
-	complex fv[2048] = {0};
+	comp fy[2048] = {0};
+	comp fv[2048] = {0};
 
 	int i, xidx;
 	double t = 0, step, fy_re;
@@ -556,8 +556,8 @@ void bluestein_fft(complex *x, complex *y, int y_data_num)
 
 	//print_complex(res, 800);
 
-	//memcpy(&y[0], &res[0], 800U * sizeof(complex));
-	memcpy(&y[0], &res[0], dn * sizeof(complex));
+	//memcpy(&y[0], &res[0], 800U * sizeof(comp));
+	memcpy(&y[0], &res[0], dn * sizeof(comp));
 }
 
 void fft_shift(double *x)

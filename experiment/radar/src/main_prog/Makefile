@@ -11,7 +11,7 @@ INC_DIRS += -I$(PWD)/../radar_principles
 INC_DIRS += -I$(PWD)/../opengl
 INC_DIRS += -I$(PWD)/../radar_signal_processing
 
-LIBS = -lm -lGL -lglut -lGLU
+LIBS = -lm -lGL -lglut -lGLU -lstdc++
 
 OBJS = $(SRCS:%.c=%.o)
 

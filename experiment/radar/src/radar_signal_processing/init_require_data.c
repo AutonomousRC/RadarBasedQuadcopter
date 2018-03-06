@@ -13,10 +13,10 @@ void arr_alloc(double **data, int num)
 	memset(*data, 0x0, sizeof(double) * num);
 }
 
-void complex_arr_alloc(complex **data, int num)
+void complex_arr_alloc(comp **data, int num)
 {
-	*data = (complex *)malloc(sizeof(complex) * num);
-	memset(*data, 0x0, sizeof(complex) * num);
+	*data = (comp *)malloc(sizeof(comp) * num);
+	memset(*data, 0x0, sizeof(comp) * num);
 }
 
 // first sample_num = 800
@@ -34,10 +34,10 @@ void init_require_data(double *sig, int sample_num)
 	//double series[n] = {0};
 	double *series = NULL;
 
-	//complex data[n] = {0};
-	complex *data = NULL;
-	//complex fft_res[n] = {0};
-	complex *fft_res = NULL;
+	//comp data[n] = {0};
+	comp *data = NULL;
+	//comp fft_res[n] = {0};
+	comp *fft_res = NULL;
 
 	arr_alloc(&t, n);
 	arr_alloc(&sq_t, n);

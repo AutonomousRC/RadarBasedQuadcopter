@@ -14,10 +14,10 @@ int main(void)
 	double tmp3[33] = {0};
 	double tmp4[33] = {0};
 	double tmp5[33] = {0};
-	complex tmp6[33] = {0};
+	comp tmp6[33] = {0};
 
 	double tmp7[33] = {0};
-	complex tmp8[33] = {0};
+	comp tmp8[33] = {0};
 
 	double res[33] = {0};
 
@@ -34,14 +34,14 @@ int main(void)
 		//printf("tmp3[%d] = %lf\n", i, tmp3[i]);
 		//printf("tmp4[%d] = %lf\n", i, tmp4[i]);
 		//printf("tmp5[%d] = %lf\n", i, tmp5[i]);
-		//print_complex(tmp6, 32);
+		//print_comp(tmp6, 32);
 	}
 
 	zeroth_modify_bessel(tmp5, tmp6, 32);
 
 #if 0
 	for(i = 0; i < len; i++)
-		print_complex(tmp6, 32);
+		print_comp(tmp6, 32);
 #endif
 	printf("\n\n\n");
 	zeroth_modify_bessel(tmp7, tmp8, 1);

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "complex_math.h"
 
-void euler_formula(double *series, complex *data, int data_num)
+void euler_formula(double *series, comp *data, int data_num)
 {
 	int i;
 
@@ -13,7 +13,7 @@ void euler_formula(double *series, complex *data, int data_num)
 	}
 }
 
-void complex_abs(complex *x, double *y, int data_num)
+void complex_abs(comp *x, double *y, int data_num)
 {
 	int i;
 	double temp_re, temp_im;
@@ -28,7 +28,7 @@ void complex_abs(complex *x, double *y, int data_num)
 	}
 }
 
-void complex_sqrt(complex *z)
+void complex_sqrt(comp *z)
 {
 	double b, c;
 	double tmp1, tmp2;
@@ -40,7 +40,7 @@ void complex_sqrt(complex *z)
 	z->im = (-b - sqrt(pow(b, 2.0) - 4.0 * c)) / 2.0;
 }
 
-void complex_div(complex *z1, complex *z2, double *res, int num)
+void complex_div(comp *z1, comp *z2, double *res, int num)
 {
 	int i;
 
@@ -48,7 +48,7 @@ void complex_div(complex *z1, complex *z2, double *res, int num)
 		res[i] = z1[i].re / z2[i].re;
 }
 
-void print_complex(complex *data, int data_num)
+void print_complex(comp *data, int data_num)
 {
 	int i;
 

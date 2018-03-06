@@ -4,7 +4,7 @@
 #include "complex_math.h"
 
 void arr_alloc(double **, int);
-void complex_arr_alloc(complex **, int);
+void complex_arr_alloc(comp **, int);
 void init_require_data(double *, int);
 
 #endif

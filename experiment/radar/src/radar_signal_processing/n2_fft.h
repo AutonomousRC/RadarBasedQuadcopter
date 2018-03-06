@@ -3,6 +3,6 @@
 
 #include "complex_math.h"
 
-void n2_fft(double *, complex *, int, int);
+void n2_fft(double *, comp *, int, int);
 
 #endif

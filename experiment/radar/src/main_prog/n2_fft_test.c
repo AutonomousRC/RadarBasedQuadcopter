@@ -6,7 +6,7 @@ int main(void)
 {
 	int i;
 	double sample[32] = {0};
-	complex freq[256] = {0};
+	comp freq[256] = {0};
 
 	for(i = 0; i < 32; i++)
 		sample[i] = 1.0;
