@@ -1,4 +1,5 @@
 #include "radar_basic.h"
+#include "doppler_frequency.h"
 #include "math_tech.h"
 
 int doppler_frequency(float freq, float ang, float radar_vel, float tar_vel,

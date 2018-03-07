@@ -20,7 +20,7 @@ all:	$(OBJS)
 	@echo "====================================================="
 	@echo "========= Compiling Radar Signal Processing ========="
 	@echo "====================================================="
-	$(CC) $(DBG_FLAGS) -c $< -o $@ $(INC_DIRS)
+	$(CXX) $(DBG_FLAGS) -c $< -o $@ $(INC_DIRS)
 
 clean:
 	rm -rf *.o

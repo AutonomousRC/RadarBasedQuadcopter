@@ -1,5 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <GL/glew.h>
+
 #include "ogl_helper.h"
 #include "init_ogl.h"
+#include "sinc_function.h"
 
 void ogl_init(int argc, char **argv, char *str)
 {
@@ -40,4 +45,40 @@ void ogl_3d_post_process(void (*disp_func)(void), void (*reshape_func)(int, int)
 		glutTimerFunc(33, timer_func, 1);
 
 	glutMainLoop();
+}
+
+void ogl_shader_process(void (*disp_func)(void))
+{
+    GLenum glew_status = glewInit();
+
+    if(GLEW_OK != glew_status)
+    {
+        fprintf(stderr, "error: %s\n", glewGetErrorString(glew_status));
+        exit(1);
+    }
+
+    if(!GLEW_VERSION_2_0)
+    {
+        fprintf(stderr, "No support for OpenGL 2.0 found\n");
+        exit(1);
+    }
+
+    GLint max_units;
+
+    glGetIntegerv(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS, &max_units);
+
+    if(max_units < 1)
+    {
+        fprintf(stderr, "GPU doesn't have any vertex texture image units\n");
+        exit(1);
+    }
+
+    if(init_shaders())
+    {
+        glutDisplayFunc(disp_func);
+        glutIdleFunc(disp_func);
+        glutMainLoop();
+    }
+
+    free_resources();
 }

@@ -1,5 +1,6 @@
 #include "radar_basic.h"
 #include "math_tech.h"
+#include "sdjpn.h"
 
 void sdjpn(float pt, float g, float sigma, float freq, float tau, float loss,
 	float R, float pj, float bj, float gj, float lossj, float *sjn)

@@ -4,6 +4,7 @@
 #include "complex_math.h"
 #include "math_tech.h"
 #include "init_require_data.h"
+#include "rect_window.h"
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>

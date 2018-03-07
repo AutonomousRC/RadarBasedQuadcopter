@@ -1,4 +1,5 @@
 #include "radar_basic.h"
+#include "power_aperture.h"
 #include "math_tech.h"
 
 void power_aperture(float snr, float tsc, float sigma, float range, float nf,

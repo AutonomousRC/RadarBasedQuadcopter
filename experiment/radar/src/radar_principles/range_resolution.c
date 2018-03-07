@@ -1,4 +1,5 @@
 #include "radar_basic.h"
+#include "range_resolution.h"
 
 int range_resolution(float variable, float *delta_R, int sel)
 {

@@ -1,4 +1,5 @@
 #include "radar_basic.h"
+#include "pulse_train.h"
 
 void pulse_train(float tau, float pri, float p_peak,
 		float *dt, float *prf, float *pav, float *ep, float *ru)

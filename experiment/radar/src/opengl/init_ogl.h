@@ -11,5 +11,6 @@ void ogl_3d_init(int, char **, char *);
 void setup_rc(void);
 void ogl_post_process(void (*)(void));
 void ogl_3d_post_process(void (*)(void), void (*)(int, int), void (*)(int));
+void ogl_shader_process(void (*)(void));
 
 #endif

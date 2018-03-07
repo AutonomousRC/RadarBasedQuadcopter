@@ -10,11 +10,13 @@ INC_DIRS = -I$(PWD)/../radar_principles
 INC_DIRS += -I$(PWD)/../math
 INC_DIRS += -I$(PWD)/../radar_signal_processing
 
-LIBS = -lm -lGL -lglut -lGLU
+LIBS = -lm -lGL -lglut -lGLU -lGLEW -lstdc++
 
 #SRCS = ogl_helper.c
 SRCS = $(wildcard *.c)
+CPP_SRCS = $(wildcard *.cpp)
 OBJS = $(SRCS:%.c=%.o)
+OBJS += $(CPP_SRCS:%.cpp=%.o)
 
 all:	$(OBJS)
 
@@ -25,7 +27,7 @@ all:	$(OBJS)
 	@echo " "
 	@echo "SRC = $(SRCS)"
 	@echo " "
-	$(CC) $(DBG_FLAGS) -c $< -o $@ $(INC_DIRS)
+	$(CXX) $(DBG_FLAGS) -c $< -o $@ $(INC_DIRS) $(LIBS)
 
 clean:
 	rm -rf *.o

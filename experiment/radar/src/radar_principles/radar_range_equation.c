@@ -1,4 +1,5 @@
 #include "radar_basic.h"
+#include "radar_range_equation.h"
 #include "math_tech.h"
 
 void radar_range_equation(float pt, float freq, float g, float sigma, float to,

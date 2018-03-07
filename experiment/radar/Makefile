@@ -6,6 +6,7 @@ OGL = $(SRC)/opengl
 MAIN = $(SRC)/main_prog
 RADAR_PRINCIPLES = $(SRC)/radar_principles
 RADAR_SIGNAL_PROCESSING = $(SRC)/radar_signal_processing
+GLSL = $(SRC)/glsl
 
 RADAR_BASIC = $(MAIN)/radar_basic
 SNR_DR_RCS = $(MAIN)/snr_dr_rcs
@@ -19,6 +20,7 @@ FFT_HAMMING_WIN = $(MAIN)/fft_hamming_win
 FFT_HANNING_WIN = $(MAIN)/fft_hanning_win
 BESSEL_TEST = $(MAIN)/bessel_test
 FFT_KAISER_WIN = $(MAIN)/fft_kaiser_win
+SINC_3D = $(MAIN)/sinc_3d
 
 SUBDIRS = $(MATH) $(RADAR_PRINCIPLES) $(OGL) $(RADAR_SIGNAL_PROCESSING)
 
@@ -36,6 +38,8 @@ all:	main
 	$(shell cp $(FFT_HANNING_WIN) ./build/)
 	$(shell cp $(BESSEL_TEST) ./build/)
 	$(shell cp $(FFT_KAISER_WIN) ./build/)
+	$(shell cp $(SINC_3D) ./build/)
+	$(shell cp -r $(GLSL) ./build/)
 
 main:	_all
 	$(MAKE) -C $(MAIN)

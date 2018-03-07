@@ -1,5 +1,6 @@
 #include "radar_basic.h"
 #include "math_tech.h"
+#include "self_screening_jammer.h"
 
 void self_screening_jammer(float pt, float g, float freq, float sigma, float br,
                         float loss, float pj, float bj, float gj, float lossj, float *br_range)

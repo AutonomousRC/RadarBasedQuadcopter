@@ -1,5 +1,6 @@
 #include "radar_basic.h"
 #include "math_tech.h"
+#include "stand_off_jammer.h"
 
 void stand_off_jammer(float pt, float g, float sigma, float b, float freq, float loss, float range,
                 float pj, float bj, float gj, float lossj, float gprime, float rangej, float *br_range)

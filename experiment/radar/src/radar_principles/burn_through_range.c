@@ -1,4 +1,5 @@
 #include "radar_basic.h"
+#include "burn_through_range.h"
 #include "math_tech.h"
 
 void burn_through_range(float pt, float g, float sigma, float freq, float tau, float loss, float pj,
